@@ -12,34 +12,49 @@ using namespace std;
 template<class T>
 class Quiz {
 public:
-    virtual Prob question(Dict<T>& dict, string uname = "admin");
-    const vector<Prob>& get_records() const {return records;}
-    T a;
-    string q = a.get_question();
+    /*
+        Get question from GPT,
+        get Answer from User,
+        Check if the answer is right from GPT
+        record it to records
+    */
+    virtual Prob question(Dict<T>& dict, bool if_from, string uname = "admin");
 
+    /* 
+        return the record vector to user class;
+        they will save it into Rec_probs.
+    */
+    const vector<Prob>& get_records() const {return records;}
     
 private:
     vector<Prob> records;
-    const static vector<string> init_prompt = set_init_prompt();
-    static vector<string> set_init_prompt = {
-        vector<string> ret(0);
-        ret.push_back(
-            "Give me an simple word without any sentence.
-            Then I'll give you an Korean answer.
-            And then you'll give me an response with the json format:
-            {
-            "Question": "Giraffe",
-            "User's answer": "기린",
-            "Actual answer": "기린"
-            "If-correct": "Yes"
-            }
-        );
-    }
+    const static vector<string> init_prompt = 
+    "Give me a question with a single English word\
+                        in 4 choices of Korean.";
 }
 
-template<class T>
-class Quiz_word_to_word: Quiz<T> {
-    Prob question(Dict<T>& dict, string uname = "admin");
+class Quiz_E2K: Quiz<EngDef> {
+    Prob question(Dict<EngDef>& dict, string uname = "admin");
+}
+
+class Quiz_K2E: Quiz<EngDef> {
+    Prob question(Dict<EngDef>& dict, string uname = "admin");
+}
+
+class Quiz_C2K: Quiz<ChnDef> {
+    Prob question(Dict<ChnDef>& dict, string uname = "admin");
+}
+
+class Quiz_K2C: Quiz<ChnDef> {
+    Prob question(Dict<ChnDef>& dict, string uname = "admin");
+}
+
+class Quiz_J2K: Quiz<JpnDef> {
+    Prob question(Dict<JpnDef>& dict, string uname = "admin");
+}
+
+class Quiz_K2J: Quiz<JpnDef> {
+    Prob question(Dict<JpnDef>& dict, bool if_from, string uname = "admin");
 }
 
 #endif
