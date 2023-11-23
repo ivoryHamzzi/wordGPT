@@ -36,9 +36,9 @@ void Record::print_rec(){
     for(int i=0; i<10; i++){
         cout<<i+1<<") q: "<<quiz[i].first<<", a: "<<quiz[i].second<<", ";
         if(is_ans[i])
-            cout<<"o"<<endl;
+            cout<<"O"<<endl;
         else 
-            cout<<"x"<<endl;
+            cout<<"X"<<endl;
     }
 }
 #endif

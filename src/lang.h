@@ -15,12 +15,12 @@ public:
 
     const string& get_def();
     void set_def(const string& d);
-
+    virtual void load_from_gpt(string str);
     virtual void printWordDetail();
 
 protected:
     string word;
-    string def;    
+    string def; 
 };
 
 class EngDef: public LangDef{
@@ -30,10 +30,19 @@ public:
     const string& getPronunc();
     void setPronunc(const string& p);
 
+    void load_from_gpt_from_kor(string str);
+    void load_from_gpt_to_kor(string str);
     void printWordDetail();
-
+    static const string& get_prompt_from_kor(){
+        return prompt_from_kor;
+    }
+    static const string& get_prompt_to_kor(){
+        return prompt_from_kor;
+    }
 private:
     string pron;
+    static const string prompt_from_kor;//kor ->
+    static const string prompt_to_kor;
 };
 
 class JpnDef: public LangDef {
@@ -46,11 +55,19 @@ public:
     void setKanxi(string k);
     const string& getKanxi();
 
+    void load_from_gpt(string str);
     void printWordDetail();
-
+    static const string& get_prompt_from_kor(){
+        return prompt_from_kor;
+    }
+    static const string& get_prompt_to_kor(){
+        return prompt_from_kor;
+    }
 private:
     string kanxi;
     string pron;
+    static const string prompt_from_kor;//kor ->
+    static const string prompt_to_kor;
 };
 
 class ChnDef: public LangDef {
@@ -66,9 +83,18 @@ public:
 
     void printWordDetail();
 
+    static const string& get_prompt_from_kor(){
+        return prompt_from_kor;
+    }
+    static const string& get_prompt_to_kor(){
+        return prompt_from_kor;
+    }
+
 private:
     string kanxi;
     string eng_rep;
+    static const string prompt_from_kor;//kor ->
+    static const string prompt_to_kor;
 };
 
 class KorDef: public LangDef{
