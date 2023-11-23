@@ -1,7 +1,9 @@
 #ifndef LANG_H
 #define LANG_H
 #include <string>
-
+#include "nlohmann/json.hpp"
+#include "openai.hpp"
+#include <fstream>
 using namespace std;
 
 class LangDef {
@@ -15,9 +17,11 @@ public:
 
     const string& get_def();
     void set_def(const string& d);
-    virtual void load_from_gpt(string str);
-    virtual void printWordDetail();
-
+    
+    virtual const KorDef& load_from_gpt_from_kor(string str){return;}
+    virtual const KorDef& load_from_gpt_to_kor(string str){return;}
+    virtual void printWordDetail(){return;}
+    
 protected:
     string word;
     string def; 
@@ -30,19 +34,13 @@ public:
     const string& getPronunc();
     void setPronunc(const string& p);
 
-    void load_from_gpt_from_kor(string str);
-    void load_from_gpt_to_kor(string str);
+    friend ostream& operator << (ostream& outs, const EngDef& l);
+    friend istream& operator >> (istream& ins, EngDef& l);
+    const KorDef& load_from_gpt_from_kor(string str);
+    const KorDef& load_from_gpt_to_kor(string str);
     void printWordDetail();
-    static const string& get_prompt_from_kor(){
-        return prompt_from_kor;
-    }
-    static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
-    }
 private:
     string pron;
-    static const string prompt_from_kor;//kor ->
-    static const string prompt_to_kor;
 };
 
 class JpnDef: public LangDef {
@@ -55,19 +53,14 @@ public:
     void setKanxi(string k);
     const string& getKanxi();
 
-    void load_from_gpt(string str);
+    friend ostream& operator << (ostream& outs, const JpnDef& l);
+    friend istream& operator >> (istream& ins, JpnDef& l);
+    const KorDef& load_from_gpt_from_kor(string str);
+    const KorDef& load_from_gpt_to_kor(string str);
     void printWordDetail();
-    static const string& get_prompt_from_kor(){
-        return prompt_from_kor;
-    }
-    static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
-    }
 private:
     string kanxi;
     string pron;
-    static const string prompt_from_kor;//kor ->
-    static const string prompt_to_kor;
 };
 
 class ChnDef: public LangDef {
@@ -83,18 +76,14 @@ public:
 
     void printWordDetail();
 
-    static const string& get_prompt_from_kor(){
-        return prompt_from_kor;
-    }
-    static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
-    }
+    friend ostream& operator << (ostream& outs, const ChnDef& l);
+    friend istream& operator >> (istream& ins, ChnDef& l);
+    const KorDef& load_from_gpt_from_kor(string str);
+    const KorDef& load_from_gpt_to_kor(string str);
 
 private:
     string kanxi;
     string eng_rep;
-    static const string prompt_from_kor;//kor ->
-    static const string prompt_to_kor;
 };
 
 class KorDef: public LangDef{
@@ -108,6 +97,8 @@ public:
     const string& getHanja();
     void setHanja(const string& h);
 
+    friend ostream& operator << (ostream& outs, const KorDef& l);
+    friend istream& operator >> (istream& ins, KorDef& l);
     void printWordDetail();
 
 private:

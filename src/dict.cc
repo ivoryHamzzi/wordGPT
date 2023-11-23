@@ -1,4 +1,60 @@
 #include "dict.h"
+#include <fstream>
+
+
+template<class T>
+void Dict<T>::load_dict(){
+    using namespace std;
+    ifstream ins;
+    ins.open(dict_file_path);
+    
+    int ops = -1;
+    while(ins >> ops){
+        switch (ops){
+        case 1:
+            string k;
+            T e;
+            cin>> k>> e;
+            dict_from_kor.insert((k,e));
+            break;
+        case 2:
+            string e;
+            KorDef k;
+            cin>> e>> k;
+            dict_to_kor.insert((e,k));
+            break;
+        case 3:
+            string e;
+            T ec;
+            cin>> e>> ec;
+            dict_to_kor.insert((e,ec));
+            break;
+        }
+
+    }
+}
+
+template<class T>
+void Dict<T>::store_dict(){
+    using namespace std;
+    ofstream out;
+    out.open(dict_file_path);
+    auto iter = dict_from_kor.begin();
+    while(iter != dict_from_kor.end()){
+        out<<"1" << (*iter).first<<" "<<(*iter).second<<'\n';
+        iter++;
+    }
+    iter = dict_to_kor.begin();
+    while(iter != dict_to_kor.end()){
+        out<<"2" << (*iter).first<<" "<<(*iter).second<<'\n';
+        iter++;
+    }
+    iter = word_detail.begin();
+    while(iter != word_detail.end()){
+        out<<"3" << (*iter).first<<" "<<(*iter).second<<'\n';
+        iter++;
+    }
+}
 
 template<class T>
 void Dict<T>::search_mode(int mode){
