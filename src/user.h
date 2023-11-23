@@ -14,7 +14,6 @@ public:
     void insert_rec(const vector<Prob>& new_rec) {rec.insertRec(new_rec);}
 private:
     QuizHistory rec;
-    int rec_size;
     string rec_file;
 };
 

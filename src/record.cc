@@ -6,6 +6,8 @@ Rec_probs::Rec_probs(vector<Prob>probs)
     setDay(localtime(&t)->tm_mday);
     setMonth(localtime(&t)->tm_mon + 1);
     problems = vector<Prob>(probs.begin(), probs.end());
+    for(auto& p: probs)
+        score += p.if_right ? 1 : 0;
     sz = problems.size();
 }
 
@@ -18,10 +20,9 @@ Prob Rec_probs::operator[] (int n) const
 }
 
 
-void QuizHistory::insertRec(vector<Prob> pbs)
+void QuizHistory::insertRec(const vector<Prob>& pbs)
 {
     records.push_back(Rec_probs(pbs));
-
 }
 
 void QuizHistory::printRec(int n = 1, int from = 0)

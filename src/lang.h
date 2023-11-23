@@ -37,7 +37,7 @@ public:
         return prompt_from_kor;
     }
     static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
+        return prompt_to_kor;
     }
 private:
     string pron;
@@ -61,7 +61,7 @@ public:
         return prompt_from_kor;
     }
     static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
+        return prompt_to_kor;
     }
 private:
     string kanxi;
@@ -87,7 +87,7 @@ public:
         return prompt_from_kor;
     }
     static const string& get_prompt_to_kor(){
-        return prompt_from_kor;
+        return prompt_to_kor;
     }
 
 private:

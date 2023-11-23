@@ -22,8 +22,9 @@ public:
     void search_mode(int mode);
     void add_map(const KorDef& kor, const T& lang);
 private:
+    
     unordered_map<String, T> dict_from_kor;
-    unordered_map<String, KOREAN> dict_to_kor;
+    unordered_map<String, KorDef> dict_to_kor;
     unordered_map<String, T> word_detail;
     string dict_file;
 };

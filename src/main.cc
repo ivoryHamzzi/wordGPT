@@ -7,8 +7,11 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Dict<Eng> dictionary;
-    //user_init();
+    Dict<Eng> dict_eng;
+    Dict<Jpn> dict_jpn;
+    Dict<Chn> dict_chn;
+
+    Users users;
 
     bool if_run = true;
     while(if_run) {
@@ -27,7 +30,17 @@ int main(int argc, char* argv[])
                 cout << "From Korean(0), or to Korean(1)?" << endl;
                 cin >> mode_2;
             }
-            dictionary.search_mode(mode_2);
+            switch(static_cast<Language>(lang_int)) {
+            case ENGLISH:
+                dict_eng.search_mode(mode_2);
+                break;
+            case JAPANESE:
+                dict_jpn.search_mode(mode_2);
+                break;
+            case CHINESE:
+                dict_chn.search_mode(mode_2);
+                break;
+            }
             break;
         case 2: // QUIZ mode
             while(lang_int > 3 || lang_int < 1) {

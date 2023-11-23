@@ -1,4 +1,5 @@
 #include "lang.h"
+#include "../include/openai/openai.hpp"
 #include <iostream>
 
 const string& LangDef::getWord()

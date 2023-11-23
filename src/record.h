@@ -39,7 +39,7 @@ protected:
 class QuizHistory{
 public:
     QuizHistory():score(0), highest_score(0) {records = vector<Rec_probs>(0);}
-    void insertRec(vector<Prob> pbs);
+    void insertRec(const vector<Prob>& pbs);
     void printRec(int n, int from);
 
     long getScore() const {return score;}
