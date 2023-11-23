@@ -7,10 +7,11 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Dict<EngDef> dictionary_eng("./dict_store_eng.txt");
-    Dict<ChnDef> dictionary_jpn("./dict_store_jpn.txt");
-    Dict<ChnDef> dictionary_chn("./dict_store_chn.txt");
+    Dict<EngDef> dict_eng("./dict_store_eng.txt");
+    Dict<ChnDef> dict_jpn("./dict_store_jpn.txt");
+    Dict<ChnDef> dict_chn("./dict_store_jpn.txt");
     //user_init();
+    User users;
 
     bool if_run = true;
     while(if_run) {
@@ -29,16 +30,16 @@ int main(int argc, char* argv[])
                 cout << "From Korean(0), or to Korean(1)?" << endl;
                 cin >> mode_2;
             }
-            switch(lang_int){
-                case 1: 
-                    dictionary_eng.search_mode(mode_2);
-                    break;
-                case 2: 
-                    dictionary_jpn.search_mode(mode_2);
-                    break;
-                case 3: 
-                    dictionary_chn.search_mode(mode_2);
-                    break;
+            switch(static_cast<Language>(lang_int)) {
+            case ENGLISH:
+                dict_eng.search_mode(mode_2);
+                break;
+            case JAPANESE:
+                dict_jpn.search_mode(mode_2);
+                break;
+            case CHINESE:
+                dict_chn.search_mode(mode_2);
+                break;
             }
             break;
         case 2: // QUIZ mode
@@ -54,7 +55,7 @@ int main(int argc, char* argv[])
             break;
 
     }
-    dictionary_eng.store_dict();
-    dictionary_jpn.store_dict();
-    dictionary_chn.store_dict();
+    dict_eng.store_dict();
+    dict_jpn.store_dict();
+    dict_chn.store_dict();
 }

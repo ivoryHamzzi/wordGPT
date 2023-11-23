@@ -26,7 +26,6 @@ public:
     void search_mode(int mode);
     void add_map(const KorDef& kor, const T& lang);
 private:
-    unordered_map<string, T> dict_from_kor;
     unordered_map<string, KorDef> dict_to_kor;
     unordered_map<string, T> word_detail;
     string dict_file_path;

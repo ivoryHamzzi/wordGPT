@@ -63,36 +63,32 @@ void Dict<T>::search_mode(int mode){
     std::cin>>input_word;
     switch(mode){
     case 0://from korean
-        T lang;
+        T lang();
         auto iter = dict_from_kor.find(input_word);
-        if(iter == dict_from_kor.end()){
-            T* langPtr = new T();
-            langPtr.load_from_gpt();
-            KorDef* korPtr = new KorDef();
-            korPtr.load_from_gpt();
+        if(iter == dict_from_kor.end()) { // NOT-FOUND
+            lang.load_from_gpt_from_kor(input_word);
+            KorDef kor();
+            kor.load_from_gpt_from_kor(input_word);
 
-            dict_from_kor.insert(((*korPtr).get_word(), *langPtr));
-            dict_to_kor.insert(((*langPtr).get_word(), *korPtr));
-            word_detail.insert(((*langPtr).get_word(), *langPtr));
-            lang = *langPtr;
-        }else{
+            dict_from_kor.insert(kor.get_word(), lang);
+            dict_to_kor.insert(lang.get_word(), kor);
+            word_detail.insert(lang.get_word(), lang);
+        } else {
             lang = *iter;
         }
         lang.print_search();
         break;
     case 1://to korean
-        KorDef lang;
+        KorDef lang();
         auto iter = dict_to_kor.find(input_word);
         if(iter == dict_to_kor.end()){
-            T* langPtr = new T();
-            langPtr.load_from_gpt();
-            KorDef* korPtr = new KorDef();
-            korPtr.load_from_gpt();
+            lang.load_from_gpt_to_kor();
+            KorDef kor();
+            kor.load_from_gpt_to_kor();
 
-            dict_from_kor.insert(((*korPtr).get_word(), *langPtr));
-            dict_to_kor.insert(((*langPtr).get_word(), *korPtr));
-            word_detail.insert(((*langPtr).get_word(), *langPtr));
-            lang = *korPtr;
+            dict_from_kor.insert(kor.get_word(), lang);
+            dict_to_kor.insert(lang.get_word(), kor);
+            word_detail.insert(lang.get_word(), lang);
         }else{
             lang = *iter;
         }

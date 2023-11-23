@@ -13,6 +13,7 @@ struct Prob{
 
 class Rec_probs{
 public:
+    Rec_probs():sz(0), score(0){}
     Rec_probs(vector<Prob>probs);
     int getScore() const {return score;}
     int getSize() const {return sz;}
@@ -25,23 +26,25 @@ public:
     int setScore(const int& s) {score = s;}
 
     Prob operator[] (int n) const;
-
+    friend istream& operator >> (istream& ins, Rec_probs& rec);
+    friend ostream& operator << (ostream& outs, Rec_probs& rec);
 protected:
-    vector<Prob> problems;
     int sz;
     struct {
         int month;
         int day;
     } date;
     int score;
+    vector<Prob> problems;
 };
 
 class QuizHistory{
 public:
-    QuizHistory():score(0), highest_score(0) {records = vector<Rec_probs>(0);}
-    void insertRec(vector<Prob> pbs);
+    QuizHistory():score(0),sz(0), highest_score(0) {records = vector<Rec_probs>(0);}
+    void insertRec(const vector<Prob>& pbs);
     void printRec(int n, int from);
 
+    void load_rec(string s);
     long getScore() const {return score;}
     int getSize() const {return sz;}
     int getMaxScore() const {return highest_score;}

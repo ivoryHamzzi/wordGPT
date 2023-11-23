@@ -7,14 +7,13 @@
 using namespace std;
 class User{
 public:
-    User(string s):rec_file(s), rec_size(0){}
-    User():rec_file(""),rec_size(0){}
+    User(string s):rec_file(s){rec.load_rec(s);}
+    User():rec_file(""){}
 
     void load_rec();
     void insert_rec(const vector<Prob>& new_rec) {rec.insertRec(new_rec);}
 private:
     QuizHistory rec;
-    int rec_size;
     string rec_file;
 };
 
