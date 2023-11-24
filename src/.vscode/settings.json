@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "unordered_map": "cpp",
+        "memory": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "vector": "cpp",
+        "xmemory": "cpp",
+        "xstddef": "cpp",
+        "xstring": "cpp",
+        "iostream": "cpp",
+        "iosfwd": "cpp",
+        "map": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "/usr/include/c++/9/"
+    ],
+    "C_Cpp.errorSquiggles": "enabled",
+}
