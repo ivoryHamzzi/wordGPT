@@ -8,9 +8,9 @@ using namespace std;
 
 class LangDef {
 public:
-    LangDef(const string& w, const string& d):word(w),def(d){};
-    LangDef(const string& w):word(w),def(""){};
-    LangDef():word(""),def(""){};
+    LangDef(const string& w, const string& d):word(w),def(d){}
+    LangDef(const string& w):word(w),def(""){}
+    LangDef():word(""),def(""){}
 
     const string& getWord();
     void setWord(const string& w);
@@ -29,7 +29,7 @@ protected:
 
 class EngDef: public LangDef{
 public:
-    EngDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {};
+    EngDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {}
 
     const string& getPronunc();
     void setPronunc(const string& p);
@@ -45,7 +45,7 @@ private:
 
 class JpnDef: public LangDef {
 public:
-    JpnDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {};
+    JpnDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {}
 
     const string& getPronunc();
     void setPronunc(const string& p);
@@ -66,7 +66,7 @@ private:
 class ChnDef: public LangDef {
 public:
     ChnDef(const string& w, const string& d, const string& k, string& en)
-        : kanxi(k), eng_rep(en), LangDef(w, d) {};
+        : kanxi(k), eng_rep(en), LangDef(w, d) {}
 
     void setKanxi(string k);
     const string& getKanxi();
@@ -89,7 +89,7 @@ private:
 class KorDef: public LangDef{
 public:
     KorDef(const string& w, const string& d, const string& p, string& h)
-        : pron(p), hanja_rep(h), LangDef(w, d) {};    
+        : pron(p), hanja_rep(h), LangDef(w, d) {}  
 
     const string& getPronunc();
     void setPronunc(const string& p);
