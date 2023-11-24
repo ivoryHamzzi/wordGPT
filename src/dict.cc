@@ -1,36 +1,18 @@
 #include "dict.h"
 #include <fstream>
 
-
 template<class T>
 void Dict<T>::load_dict(){
     using namespace std;
     ifstream ins;
     ins.open(dict_file_path);
     
-    int ops = -1;
-    while(ins >> ops){
-        switch (ops){
-        case 1:
-            string k;
-            T e;
-            cin>> k>> e;
-            dict_from_kor.insert((k,e));
-            break;
-        case 2:
-            string e;
-            KorDef k;
-            cin>> e>> k;
-            dict_to_kor.insert((e,k));
-            break;
-        case 3:
-            string e;
-            T ec;
-            cin>> e>> ec;
-            dict_to_kor.insert((e,ec));
-            break;
+    int cnt = 0;
+    int curId = -1;
+    while(ins>>curID){
+        if(curID != cnt){
+            for(int i = cnt;)
         }
-
     }
 }
 
@@ -39,23 +21,33 @@ void Dict<T>::store_dict(){
     using namespace std;
     ofstream out;
     out.open(dict_file_path);
-    auto iter = dict_from_kor.begin();
-    while(iter != dict_from_kor.end()){
-        out<<"1" << (*iter).first<<" "<<(*iter).second<<'\n';
-        iter++;
-    }
-    iter = dict_to_kor.begin();
-    while(iter != dict_to_kor.end()){
-        out<<"2" << (*iter).first<<" "<<(*iter).second<<'\n';
-        iter++;
-    }
-    iter = word_detail.begin();
-    while(iter != word_detail.end()){
-        out<<"3" << (*iter).first<<" "<<(*iter).second<<'\n';
+    auto iter = wordMap.begin();
+    while(iter != wordMap.end()){
+        out<<(*iter).first<<" "<<(*iter).second.first<<' '<<(*iter).second.second<<'\n';
         iter++;
     }
 }
 
+template<class T>
+void Dict<T>::searchDict(int id){
+    auto iter = wordMap.find(id);
+    (*iter).second.first.printWordDetail();
+    (*iter).second.se.printWordDetail();
+}
+
+template<class T>
+void Dict<T>::deleteDict(int id){
+    auto iter = wordMap.find(id);
+    wordMap.erase(iter);
+}
+template<class T>
+void Dict<T>::add_map(const int id, const KorDef& kor, const T& lang){
+    unused_id.pop();
+    wordMap.insert((id, (lang, kor)));
+}
+
+
+/*
 template<class T>
 void Dict<T>::search_mode(int mode){
     String input_word;
@@ -96,13 +88,4 @@ void Dict<T>::search_mode(int mode){
         break;
     }
 } 
-
-template<class T>
-void Dict<T>::add_map(const KorDef& kor, const T& lang){
-    auto iter = dict_from_kor.find(kor.get_word);
-    if(iter != dict_from_kor.end())return;
-    dict_from_kor.insert((kor.get_word(), lang));
-    dict_to_kor.insert((lang.get_word(), kor));
-    word_detail.insert((lang.get_word(), lang));
-}
-
+*/
