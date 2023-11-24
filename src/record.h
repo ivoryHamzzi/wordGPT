@@ -9,6 +9,13 @@ struct Prob{
     string prob;
     string ans;
     bool if_right;
+    int word_id;
+
+    template<class T>
+    void showDetail(const Dict& dict)
+    {
+        dict
+    }
 };
 
 class Rec_probs{
@@ -44,7 +51,7 @@ public:
     void insertRec(const vector<Prob>& pbs);
     void printRec(int n, int from);
 
-    void load_rec(string s);
+    void load_rec(const string& s);
     long getScore() const {return score;}
     int getSize() const {return sz;}
     int getMaxScore() const {return highest_score;}

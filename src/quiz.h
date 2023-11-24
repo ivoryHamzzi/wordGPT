@@ -24,8 +24,8 @@ public:
         return the record vector to user class;
         they will save it into Rec_probs.
     */
-    const vector<Prob>& get_records() const {return records;}
-    
+    const vector<Prob>& getRecords() const {return records;}
+
 private:
     vector<Prob> records;
     const static vector<string> init_prompt = 
@@ -33,27 +33,27 @@ private:
                         in 4 choices of Korean.";
 }
 
-class Quiz_E2K: Quiz<EngDef> {
+class QuizE2K: Quiz<EngDef> {
     Prob question(Dict<EngDef>& dict, string uname = "admin");
 }
 
-class Quiz_K2E: Quiz<EngDef> {
+class QuizK2E: Quiz<EngDef> {
     Prob question(Dict<EngDef>& dict, string uname = "admin");
 }
 
-class Quiz_C2K: Quiz<ChnDef> {
+class QuizC2K: Quiz<ChnDef> {
     Prob question(Dict<ChnDef>& dict, string uname = "admin");
 }
 
-class Quiz_K2C: Quiz<ChnDef> {
+class QuizK2C: Quiz<ChnDef> {
     Prob question(Dict<ChnDef>& dict, string uname = "admin");
 }
 
-class Quiz_J2K: Quiz<JpnDef> {
+class QuizJ2K: Quiz<JpnDef> {
     Prob question(Dict<JpnDef>& dict, string uname = "admin");
 }
 
-class Quiz_K2J: Quiz<JpnDef> {
+class QuizK2J: Quiz<JpnDef> {
     Prob question(Dict<JpnDef>& dict, bool if_from, string uname = "admin");
 }
 

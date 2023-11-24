@@ -28,15 +28,18 @@ struct {
 int score;
 vector<Prob> problems;
 */
-istream& operator >> (istream& ins, Rec_probs& rec){
+istream& operator >> (istream& ins, Rec_probs& rec)
+{
     ins>>rec.sz>>rec.date.month>>rec.date.day>>rec.score;
+    rec.problems.reserve(rec.sz);
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
         ins>>tmp.prob>>tmp.ans>>tmp.if_right;
         rec.problems.push_back(tmp);
     }
 }
-ostream& operator << (ostream& outs, Rec_probs& rec){
+ostream& operator << (ostream& outs, Rec_probs& rec)
+{
     outs<<rec.sz<<' '<<rec.date.month<<' '<<rec.date.day<<' '<<rec.score<<' ';
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
@@ -46,7 +49,7 @@ ostream& operator << (ostream& outs, Rec_probs& rec){
 }
 
 
-void QuizHistory::load_rec(string s){
+void QuizHistory::load_rec(const string& s){
     ifstream ins;
     ins.open(s);
     Rec_probs k;
