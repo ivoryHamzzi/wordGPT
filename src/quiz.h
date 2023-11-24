@@ -18,7 +18,7 @@ public:
         Check if the answer is right from GPT
         record it to records
     */
-    void question(Dict<T>& dict, bool if_from, User& user);
+    void question(Dict<T>& dict, bool if_from);
     /* 
         return the record vector to user class;
         they will save it into Rec_probs.

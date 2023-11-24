@@ -88,19 +88,19 @@ int main(int argc, char* argv[])
             case ENGLISH: {
                 Quiz<EngDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_eng, static_cast<bool>(mode), users);
+                    quiz.question(dict_eng, static_cast<bool>(mode));
             }
             break;
             case JAPANESE: {
                 Quiz<JpnDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_jpn, static_cast<bool>(mode), users);
+                    quiz.question(dict_jpn, static_cast<bool>(mode));
             }
             break;
             case CHINESE: {
                 Quiz<ChnDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_chn, static_cast<bool>(mode), users);
+                    quiz.question(dict_chn, static_cast<bool>(mode));
             }
             break;
             }
