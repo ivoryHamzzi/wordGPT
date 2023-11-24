@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
             break;
 
     }
-    dict_eng.store_dict();
-    dict_jpn.store_dict();
-    dict_chn.store_dict();
+    dict_eng.storeDict();
+    dict_jpn.storeDict();
+    dict_chn.storeDict();
 }

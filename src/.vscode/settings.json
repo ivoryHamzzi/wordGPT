@@ -1,3 +1,4 @@
+
 {
     "files.associations": {
         "unordered_map": "cpp",
@@ -10,7 +11,8 @@
         "xstring": "cpp",
         "iostream": "cpp",
         "iosfwd": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "list": "cpp"
     },
     "C_Cpp.default.includePath": [
         "/usr/include/c++/9/"

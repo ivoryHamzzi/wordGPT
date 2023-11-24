@@ -17,17 +17,17 @@ enum Language {
 template<class T>
 class Dict {
 public:
-    Dict(string s):dict_file_path(s){
-        load_dict();
-    }
+    Dict(string s):dict_file_path(s) {loadDict();}
     Dict():dict_file(""){}
 
     int retId(){return unused_id.first();}
-    void load_dict();
-    void store_dict();
-    void searchDict(int id);
+    void loadDict();
+    void storeDict();
+    void printDict(int id);
     void deleteDict(int id);
-    void add_map(const int id, const KorDef& kor, const T& lang);
+    void addMap(const int id, const KorDef& kor, const T& lang);
+    friend class Rec_probs;
+    friend struct probs;
 private:
     map<int, pair<T, KorDef> > wordMap;
     queue<int> unused_id;

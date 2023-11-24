@@ -1,7 +1,21 @@
 #include "record.h"
 #include <algorithm>
 #include <fstream>
-Rec_probs::Rec_probs(vector<Prob>probs)
+
+template <class T>
+void Prob::showDetail(const Dict<T>& dict)
+{
+    dict.printDict(word_id);
+}
+template<class T>
+void Prob::deleteProb(const Dict<T>& dict)
+{
+    auto iter = dict.wordMap.find(word_id);
+    dict.wordMap.erase(iter);
+    dict.unused_id.push(word_id);
+}
+
+Rec_probs::Rec_probs(vector<Prob>probs,Language lang):l(lang)
 {
     time_t t = time(NULL);
     setDay(localtime(&t)->tm_mday);
@@ -28,15 +42,18 @@ struct {
 int score;
 vector<Prob> problems;
 */
-istream& operator >> (istream& ins, Rec_probs& rec){
+istream& operator >> (istream& ins, Rec_probs& rec)
+{
     ins>>rec.sz>>rec.date.month>>rec.date.day>>rec.score;
+    rec.problems.reserve(rec.sz);
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
         ins>>tmp.prob>>tmp.ans>>tmp.if_right;
         rec.problems.push_back(tmp);
     }
 }
-ostream& operator << (ostream& outs, Rec_probs& rec){
+ostream& operator << (ostream& outs, Rec_probs& rec)
+{
     outs<<rec.sz<<' '<<rec.date.month<<' '<<rec.date.day<<' '<<rec.score<<' ';
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
@@ -46,32 +63,41 @@ ostream& operator << (ostream& outs, Rec_probs& rec){
 }
 
 
-void QuizHistory::load_rec(string s){
+void QuizHistory::load_rec(const string& s){
     ifstream ins;
     ins.open(s);
     Rec_probs k;
     while(ins>>k){
         records.push_back(k);
-        if(k.getScore()>highest_score)highest_score = k.getScore();
-        score+=k.getScore();
+        if(k.getScore()>highest_score)scores.insert(k.getScore());
+        score_sum+=k.getScore();
         sz++;
     }
 
 }
-void QuizHistory::insertRec(const vector<Prob>& pbs)
+void QuizHistory::insertRec(const vector<Prob>& pbs, Language lang)
 {
-    Rec_probs newRec = Rec_probs(pbs);
+    Rec_probs newRec = Rec_probs(pbs, lang);
     records.push_back(newRec);
     if(newRec.getScore() > highest_score)highest_score = newRec.getScore();
     sz++;
-    score += newRec.getScore();
+    score_sum += newRec.getScore();
+    scores.insert(newRec.getScore());
 }
 
+template <class T>
+void QuizHistory::deleteRec(int recN, Dict<T> &dict)
+{
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    
+}
 void QuizHistory::printRec(int n = 1, int from = 0)
 {
-    auto cur = records.size() - 1 - from;
-    for(; cur >= 0 && n > 0; n--, cur--) {
-        const Rec_probs& cur_rec = records[cur];
+    auto cur = records.begin();
+    for(int i=0; i<n; i++){
+        const Rec_probs& cur_rec = *cur;
         cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
             cout << i + 1 << ". " << endl;
@@ -79,6 +105,8 @@ void QuizHistory::printRec(int n = 1, int from = 0)
             cout << "Ans: " << cur_rec[i].ans << endl;
             cout << (cur_rec[i].if_right ? "Right!" : "Wrong...") << endl;
         }
+        cout << cur_rec.getScore() << '\n';
         cout << endl;
+        cur++;
     }
 }

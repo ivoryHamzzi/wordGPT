@@ -24,8 +24,8 @@ public:
         return the record vector to user class;
         they will save it into Rec_probs.
     */
-    const vector<Prob>& get_records() const {return records;}
-    
+    const vector<Prob>& getRecords() const {return records;}
+
 private:
     vector<Prob> records;
     const static vector<string> init_prompt = 
@@ -56,5 +56,4 @@ class QuizJ2K: Quiz<JpnDef> {
 class QuizK2J: Quiz<JpnDef> {
     Prob question(Dict<JpnDef>& dict, string uname = "admin");
 };
-
 #endif

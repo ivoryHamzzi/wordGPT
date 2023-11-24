@@ -2,7 +2,7 @@
 #include <fstream>
 
 template<class T>
-void Dict<T>::load_dict(){
+void Dict<T>::loadDict(){
     using namespace std;
     ifstream ins;
     ins.open(dict_file_path);
@@ -17,7 +17,7 @@ void Dict<T>::load_dict(){
 }
 
 template<class T>
-void Dict<T>::store_dict(){
+void Dict<T>::storeDict(){
     using namespace std;
     ofstream out;
     out.open(dict_file_path);
@@ -29,7 +29,7 @@ void Dict<T>::store_dict(){
 }
 
 template<class T>
-void Dict<T>::searchDict(int id){
+void Dict<T>::printDict(int id){
     auto iter = wordMap.find(id);
     (*iter).second.first.printWordDetail();
     (*iter).second.se.printWordDetail();
@@ -41,7 +41,7 @@ void Dict<T>::deleteDict(int id){
     wordMap.erase(iter);
 }
 template<class T>
-void Dict<T>::add_map(const int id, const KorDef& kor, const T& lang){
+void Dict<T>::addMap(const int id, const KorDef& kor, const T& lang){
     unused_id.pop();
     wordMap.insert((id, (lang, kor)));
 }
