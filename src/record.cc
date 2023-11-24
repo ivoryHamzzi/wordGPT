@@ -1,6 +1,12 @@
 #include "record.h"
 #include <algorithm>
 #include <fstream>
+
+Prob::showDetail(const Dict& dict)
+{
+    dict.printDict(word_id);
+}
+
 Rec_probs::Rec_probs(vector<Prob>probs)
 {
     time_t t = time(NULL);
@@ -55,8 +61,8 @@ void QuizHistory::load_rec(const string& s){
     Rec_probs k;
     while(ins>>k){
         records.push_back(k);
-        if(k.getScore()>highest_score)highest_score = k.getScore();
-        score+=k.getScore();
+        if(k.getScore()>highest_score)scores.insert(k.getScore());
+        score_sum+=k.getScore();
         sz++;
     }
 
@@ -67,7 +73,8 @@ void QuizHistory::insertRec(const vector<Prob>& pbs)
     records.push_back(newRec);
     if(newRec.getScore() > highest_score)highest_score = newRec.getScore();
     sz++;
-    score += newRec.getScore();
+    score_sum += newRec.getScore();
+    scores.insert(newRec.getScore());
 }
 
 void QuizHistory::printRec(int n = 1, int from = 0)
@@ -82,6 +89,7 @@ void QuizHistory::printRec(int n = 1, int from = 0)
             cout << "Ans: " << cur_rec[i].ans << endl;
             cout << (cur_rec[i].if_right ? "Right!" : "Wrong...") << endl;
         }
+        cout << cur_rec.getScore() << '\n';
         cout << endl;
     }
 }

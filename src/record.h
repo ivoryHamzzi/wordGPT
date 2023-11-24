@@ -1,7 +1,9 @@
-#include <vector>
+#include <list>
 #include <iostream>
 #include <algorithm>
 #include <ctime>
+#include <set>
+#include "dict.h"
 
 using namespace std;
 
@@ -12,10 +14,7 @@ struct Prob{
     int word_id;
 
     template<class T>
-    void showDetail(const Dict& dict)
-    {
-        dict
-    }
+    void showDetail(const Dict& dict);
 };
 
 class Rec_probs{
@@ -52,13 +51,13 @@ public:
     void printRec(int n, int from);
 
     void load_rec(const string& s);
-    long getScore() const {return score;}
+    long getScore() const {return score_sum;}
     int getSize() const {return sz;}
-    int getMaxScore() const {return highest_score;}
+    int getMaxScore() const {return *(scores.end()--);}
 
 private:
-    vector<Rec_probs> records;
-    long score;
+    list<Rec_probs> records;
+    long score_sum;
+    multiset<int> scores;
     int sz;
-    int highest_score;
 };
