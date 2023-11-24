@@ -4,13 +4,7 @@
 
 using namespace std;
 
-template<class T>
-Prob Quiz<T>::question(Dict<T>& dict, bool if_from, string uname = "admin")
-{
-    return Prob();
-}
-
-Prob QuizE2K::question(Dict<EngDef>& dict, string uname = "admin")
+void Quiz<EngDef>::question(Dict<EngDef>& dict, bool if_from, User& user)
 {
         //Get from openai the question (English)
         //Give an response from 4 multiple choices (Korean)
@@ -24,36 +18,16 @@ Prob QuizE2K::question(Dict<EngDef>& dict, string uname = "admin")
         //then get the answer.
 }
 
-Prob QuizK2E::question(Dict<EngDef>& dict, string uname = "admin")
-{
-        //Get from openai the question (Korean)
-        //Give an response with 4 multiple choices (English)
-        //then get the answer.
-}
-
-Prob QuizC2K::question(Dict<ChnDef>& dict, string uname = "admin")
+void Quiz<ChnDef>::question(Dict<ChnDef>& dict, bool if_from, User& user)
 {
         //Get from openai the question (Chinese)
         //Give an response with 4 multiple choices (Korean)
         //then get the answer.
 }
 
-Prob QuizK2C::question(Dict<ChnDef>& dict, string uname = "admin")
-{
-        //Get from openai the question (Korean)
-        //Give an response with 4 multiple choices (Chinese)
-        //then get the answer.
-}
-
-Prob QuizJ2K::question(Dict<JpnDef>& dict, string uname = "admin")
+void Quiz<JpnDef>::question(Dict<JpnDef>& dict, bool if_from, User& user)
 {
         //Get from openai the question (Japanese)
         //Give an response with 4 multiple choices (Korean)
-        //then get the answer.
-}
-Prob QuizK2J::question(Dict<JpnDef>& dict, string uname = "admin")
-{
-        //Get from openai the question (Korean)
-        //Give an response with 4 multiple choices (Japanese)
         //then get the answer.
 }

@@ -12,8 +12,8 @@ public:
 
     void insert_rec(const vector<Prob>& new_rec, Language lang) {rec.insertRec(new_rec, lang);}
     QuizHistory& getRec(){return rec;}
-private:
     QuizHistory rec;
+private:
     string rec_file;
 };
 

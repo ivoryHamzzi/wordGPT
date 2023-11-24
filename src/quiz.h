@@ -18,42 +18,18 @@ public:
         Check if the answer is right from GPT
         record it to records
     */
-    virtual Prob question(Dict<T>& dict, bool if_from, string uname = "admin");
-
+    void question(Dict<T>& dict, bool if_from, User& user);
     /* 
         return the record vector to user class;
         they will save it into Rec_probs.
     */
     const vector<Prob>& getRecords() const {return records;}
 
-private:
+protected:
     vector<Prob> records;
     const static vector<string> init_prompt = 
     "Give me a question with a single English word\
                         in 4 choices of Korean.";
 };
 
-class QuizE2K: Quiz<EngDef> {
-    Prob question(Dict<EngDef>& dict, string uname = "admin");
-};
-
-class QuizK2E: Quiz<EngDef> {
-    Prob question(Dict<EngDef>& dict, string uname = "admin");
-};
-
-class QuizC2K: Quiz<ChnDef> {
-    Prob question(Dict<ChnDef>& dict, string uname = "admin");
-};
-
-class QuizK2C: Quiz<ChnDef> {
-    Prob question(Dict<ChnDef>& dict, string uname = "admin");
-};
-
-class QuizJ2K: Quiz<JpnDef> {
-    Prob question(Dict<JpnDef>& dict, string uname = "admin");
-};
-
-class QuizK2J: Quiz<JpnDef> {
-    Prob question(Dict<JpnDef>& dict, string uname = "admin");
-};
 #endif
