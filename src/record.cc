@@ -7,6 +7,7 @@ void Prob::showDetail(const Dict<T>& dict)
 {
     dict.printDict(word_id);
 }
+
 template<class T>
 void Prob::deleteProb(const Dict<T>& dict)
 {
@@ -62,6 +63,15 @@ ostream& operator << (ostream& outs, Rec_probs& rec)
     }
 }
 
+template<class T>
+void Rec_probs::deleteProbs(Dict<T> &dict){
+    for(int i=0; i<sz; i++)
+        problems[i].deleteProb(dict);
+}
+template<class T>
+void Rec_probs::showDetail(Dict<T> &dict, int index){
+    problems[index].showDetail(dict);
+}
 
 void QuizHistory::load_rec(const string& s){
     ifstream ins;
@@ -85,13 +95,14 @@ void QuizHistory::insertRec(const vector<Prob>& pbs, Language lang)
     scores.insert(newRec.getScore());
 }
 
-template <class T>
-void QuizHistory::deleteRec(int recN, Dict<T> &dict)
+template<class T>
+void QuizHistory::delete_rec(int recN, Dict<T> &dict)
 {
     auto cur = records.begin();
     for(int i=0; i<recN; i++)
         cur++;
-    
+    Rec_probs curRec = *cur;
+    curRec.deleteProbs(dict);
 }
 void QuizHistory::printRec(int n = 1, int from = 0)
 {
@@ -109,4 +120,22 @@ void QuizHistory::printRec(int n = 1, int from = 0)
         cout << endl;
         cur++;
     }
+}
+
+Language QuizHistory::getLanguage(int recN){
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    Rec_probs curRec = *cur;
+    Language l = curRec.l;
+    return l;
+}
+
+template<class T>
+void QuizHistory::show_detail(int recN, int index, Dict<T> &dict){
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    Rec_probs curRec = *cur;
+    curRec.showDetail(dict, index);
 }

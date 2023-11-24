@@ -38,12 +38,12 @@ public:
     void deleteProbs(Dict<T> &dict);
     template<class T>
     void showDetail(Dict<T> &dict, int probN);
-    
+
     Prob operator[] (int n) const;
     friend istream& operator >> (istream& ins, Rec_probs& rec);
     friend ostream& operator << (ostream& outs, Rec_probs& rec);
-protected:
     Language l;
+protected:
     int sz;
     struct {
         int month;
@@ -51,6 +51,7 @@ protected:
     } date;
     int score;
     vector<Prob> problems;
+
 };
 
 class QuizHistory{
@@ -59,10 +60,12 @@ public:
     void insertRec(const vector<Prob>& pbs, Language lang);
     void printRec(int n, int from);
 
+    Language getLanguage(int recN);
     template <class T>
-    void deleteRec(int recN, Dict<T> &dict);
+    void delete_rec(int recN, Dict<T> &dict);
+    template <class T>
+    void show_detail(int recN, int index, Dict<T> &dict);
 
-    void show_detail(int recN, int probN);
 
     void load_rec(const string& s);
     long getScore() const {return score_sum;}
