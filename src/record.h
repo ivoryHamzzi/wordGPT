@@ -6,6 +6,7 @@
 using namespace std;
 
 struct Prob{
+    uint32_t mapID;
     string prob;
     string ans;
     bool if_right;

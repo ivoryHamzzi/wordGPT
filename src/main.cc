@@ -18,34 +18,52 @@ int main(int argc, char* argv[])
         int mode;
         int lang_int = -1;
         int mode_2 = -1;
-        cout << "Press 1: dict mode, 2: quiz mode, else: quit" << endl;
+        cout << "Press 1: search Record, 2: quiz mode, else: quit" << endl;
         cin >> mode;
+        while(lang_int > 3 || lang_int < 1) {
+            cout << "1: English, 2: Japanese, 3: Chinese" << endl;
+            cin >> lang_int;
+        }
+        QuizHistory history;
         switch(mode) {
-        case 1: // DICT mode
-            while(lang_int > 3 || lang_int < 1) {
-                cout << "1: English, 2: Japanese, 3: Chinese" << endl;
-                cin >> lang_int;
+        case 1: // RECORD mode
+            int sz=-1, pos=-1;
+            history = users.getRec();
+            cout<<"Average score: "<<static_cast<float>(history.getScore())/history.getSize()<<'\n';
+            cout<<"Highest score: "<<history.getMaxScore()<<'\n';
+            cout<<"Threre are total "<<history.getSize()<<
+                " records.\nSelect starting position and size to print.\n";
+            while(sz <= 0 || pos<0 || pos>history.getSize()){
+                cout<<"number of record to print: ";
+                cin>>sz;
+                cout<<"from recent(starting from 0): ";
+                cin>>pos;
             }
+            history.printRec(sz, pos);
+            int action=-1;
+            while(action <0 || action >2){
+                cout<<"\nSelect Action\n\t1: Delete record\n\t2: Show Detail\nuser: "; 
+                cin>>action;
+            }
+            if(action)
+            switch(action){
+                case 1:
+                    cout<<"Select record number to delete: ";
+                    cin>>action;
+                    //history.delete(action);
+                    break;
+                case 2:
+                    cout<<"Select record number to show detail: ";
+                    int rec_num, rec_prob;
+                    cin>>rec_num>>rec_prob;
+                    //history.show_detail(rec_num, rec_prob);
+                    break;
+            }
+
+        case 2: // QUIZ mode
             while(mode_2 < 0 || mode_2 > 1) {
                 cout << "From Korean(0), or to Korean(1)?" << endl;
                 cin >> mode_2;
-            }
-            switch(static_cast<Language>(lang_int)) {
-            case ENGLISH:
-                dict_eng.search_mode(mode_2);
-                break;
-            case JAPANESE:
-                dict_jpn.search_mode(mode_2);
-                break;
-            case CHINESE:
-                dict_chn.search_mode(mode_2);
-                break;
-            }
-            break;
-        case 2: // QUIZ mode
-            while(lang_int > 3 || lang_int < 1) {
-                cout << "1: English, 2: Japanese, 3: Chinese" << endl;
-                cin >> lang_int;
             }
             break;
         default:
