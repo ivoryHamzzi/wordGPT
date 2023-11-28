@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     Dict<JpnDef> dict_jpn("./dict_store_jpn.txt");
     Dict<ChnDef> dict_chn("./dict_store_jpn.txt");
     //user_init();
-    User users; // Multiple users to be implemented
+    User users("./user_store_eng.txt"); // Multiple users to be implemented
 
     openai::start(); // Will use the api key provided by `OPENAI_API_KEY` environment variable
 

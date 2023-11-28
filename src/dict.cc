@@ -6,7 +6,8 @@ void Dict<T>::loadDict(){
     using namespace std;
     ifstream ins;
     ins.open(dict_file_path);
-    
+    if(ins.fail())
+        return;
     int cnt = 0;
     int curId = -1;
     while(ins>>curID){
