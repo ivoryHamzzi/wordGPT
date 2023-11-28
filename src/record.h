@@ -8,11 +8,10 @@
 using namespace std;
 
 struct Prob{
-    uint32_t mapID;
     string prob;
     string ans;
     bool if_right;
-    int word_id;
+    uint32_t word_id;
 
     template<class T>
     void showDetail(const Dict<T>& dict);
@@ -23,7 +22,7 @@ struct Prob{
 class Rec_probs{
 public:
     Rec_probs():sz(0), score(0){}
-    Rec_probs(vector<Prob>probs, Language lang);
+    Rec_probs(const vector<Prob>& probs, Language lang);
     int getScore() const {return score;}
     int getSize() const {return sz;}
     int getMonth() const {return date.month;}

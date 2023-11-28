@@ -16,7 +16,7 @@ void Prob::deleteProb(const Dict<T>& dict)
     dict.unused_id.push(word_id);
 }
 
-Rec_probs::Rec_probs(vector<Prob>probs,Language lang):l(lang)
+Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang):l(lang)
 {
     time_t t = time(NULL);
     setDay(localtime(&t)->tm_mday);

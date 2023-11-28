@@ -45,7 +45,7 @@ private:
 
 class JpnDef: public LangDef {
 public:
-    JpnDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {}
+    JpnDef(const string& w, const string& d, const string& p, const string& k) : pron(p), LangDef(w, d) {}
 
     const string& getPronunc();
     void setPronunc(const string& p);
