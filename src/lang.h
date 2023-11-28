@@ -28,7 +28,8 @@ protected:
 
 class EngDef: public LangDef{
 public:
-    EngDef(const string& w, const string& d, const string& p) : pron(p), LangDef(w, d) {}
+    EngDef(const string& w, const string& d, const string& p) : LangDef(w, d), pron(p) {}
+    EngDef() : LangDef(), pron() {}
 
     const string& getPronunc();
     void setPronunc(const string& p);
@@ -42,7 +43,8 @@ private:
 
 class JpnDef: public LangDef {
 public:
-    JpnDef(const string& w, const string& d, const string& p, const string& k) : pron(p), LangDef(w, d) {}
+    JpnDef(const string& w, const string& d, const string& p, const string& k) : LangDef(w, d), kanxi(k), pron(p) {}
+    JpnDef() : LangDef(), kanxi(), pron() {}
 
     const string& getPronunc();
     void setPronunc(const string& p);
@@ -61,7 +63,8 @@ private:
 class ChnDef: public LangDef {
 public:
     ChnDef(const string& w, const string& d, const string& k, string& en)
-        : kanxi(k), eng_rep(en), LangDef(w, d) {}
+        : LangDef(w, d), kanxi(k), eng_rep(en) {}
+    ChnDef() : LangDef(), kanxi(), eng_rep() {}
 
     void setKanxi(string k);
     const string& getKanxi();
@@ -82,7 +85,8 @@ private:
 class KorDef: public LangDef{
 public:
     KorDef(const string& w, const string& d, const string& p, string& h)
-        : pron(p), hanja_rep(h), LangDef(w, d) {}  
+        : LangDef(w, d), pron(p), hanja_rep(h) {}  
+    KorDef() : LangDef(), pron(), hanja_rep() {}
 
     const string& getPronunc();
     void setPronunc(const string& p);

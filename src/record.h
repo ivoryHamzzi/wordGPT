@@ -18,7 +18,7 @@ struct Prob{
     template<class T>
     void showDetail(const Dict<T>& dict);
     template<class T>
-    void deleteProb(const Dict<T>& dict);
+    void deleteProb(Dict<T>& dict);
 };
 
 class Rec_probs{
@@ -59,7 +59,7 @@ class QuizHistory{
 public:
     QuizHistory():score_sum(0),sz(0), highest_score(0) {records = list<Rec_probs>(0);}
     void insertRec(const Rec_probs& pbs);
-    void printRec(int n, int from);
+    void printRec(int n);
 
     Language getLanguage(int recN);
     template <class T>
@@ -81,4 +81,64 @@ private:
     int highest_score;
 
 };
+
+
+template <class T>
+void Prob::showDetail(const Dict<T>& dict)
+{
+    dict.printDict(word_id);
+}
+
+template<class T>
+void Prob::deleteProb(Dict<T>& dict)
+{
+    auto iter = dict.find(word_id);
+    dict.wordMap.erase(iter);
+    dict.unused_id.push(word_id);
+}
+
+template<class T>
+void Rec_probs::deleteProbs(Dict<T> &dict){
+    for(int i=0; i<sz; i++)
+        problems[i].deleteProb(dict);
+}
+template<class T>
+void Rec_probs::showDetail(Dict<T> &dict, int index){
+    problems[index].showDetail(dict);
+}
+
+void QuizHistory::load_rec(const string& s){
+    ifstream ins;
+    ins.open(s);
+    if(ins.fail())
+        return;
+    Rec_probs k;
+    while(ins>>k){
+        records.push_back(k);
+        if(k.getScore()>highest_score)scores.insert(k.getScore());
+        score_sum+=k.getScore();
+        sz++;
+    }
+
+}
+
+template<class T>
+void QuizHistory::delete_rec(int recN, Dict<T> &dict)
+{
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    Rec_probs curRec = *cur;
+    curRec.deleteProbs(dict);
+}
+
+template<class T>
+void QuizHistory::show_detail(int recN, int index, Dict<T> &dict){
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    Rec_probs curRec = *cur;
+    curRec.showDetail(dict, index);
+}
+
 #endif

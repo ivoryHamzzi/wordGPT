@@ -20,7 +20,6 @@ int main(int argc, char* argv[])
     while(if_run) {
         int mode;
         int lang_int = -1;
-        int mode_2 = -1;
         int action;
         int rec_num, rec_prob;
         cout << "Press 1: search Record, 2: quiz mode, else: quit" << endl;
@@ -44,7 +43,7 @@ int main(int argc, char* argv[])
                 cout<<"from recent(starting from 0): ";
                 cin>>pos;
             }
-            history.printRec(sz, pos);
+            history.printRec(sz);
             action=-1;
             while(action <0 || action >2){
                 cout<<"\nSelect Action\n\t1: Delete record\n\t2: Show Detail\nuser: "; 
@@ -65,6 +64,8 @@ int main(int argc, char* argv[])
                 case CHINESE:
                     history.delete_rec(rec_num, dict_chn);
                     break;
+                default:
+                    break;
                 }
                 break;
             case 2:
@@ -80,35 +81,33 @@ int main(int argc, char* argv[])
                 case CHINESE:
                     history.show_detail(rec_num, rec_prob, dict_chn);
                     break;
+                default:
+                    break;
                 }
                 break;
             }
             break;
 
         case 2: // QUIZ mode
-            while(mode_2 < 0 || mode_2 > 1) {
-                cout << "To Korean(0), or From Korean(1)?" << endl;
-                cin >> mode_2;
-            }
             switch(lang_int) {
             case ENGLISH: {
                 Quiz<EngDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_eng, static_cast<bool>(mode));
+                    quiz.question(dict_eng);
                 users.insert_rec(quiz.getRecords());
             }
             break;
             case JAPANESE: {
                 Quiz<JpnDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_jpn, static_cast<bool>(mode));
+                    quiz.question(dict_jpn);
                 users.insert_rec(quiz.getRecords());
             }
             break;
             case CHINESE: {
                 Quiz<ChnDef> quiz;
                 for(int i = 0; i < 5; i++)
-                    quiz.question(dict_chn, static_cast<bool>(mode));
+                    quiz.question(dict_chn);
                 users.insert_rec(quiz.getRecords());
             }
             break;

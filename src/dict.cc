@@ -1,59 +1,5 @@
 #include "dict.h"
-#include <fstream>
 
-template<class T>
-void Dict<T>::loadDict(){
-    using namespace std;
-    ifstream ins;
-    ins.open(dict_file_path);
-    if(ins.fail())
-        return;
-    int cnt = 0;
-    int curId = -1;
-    while(ins>>curId){
-        if(curId != cnt){
-            for(int i = cnt; i<curId; i++)
-                unused_id.push(i);
-        }
-        cnt = curId + 1;
-        T f;
-        KorDef k;
-        cin>>f>>k;
-        wordMap.insert({curId, {f, k}});
-    }
-    for(int i = cnt; i < 10000; i++) 
-        unused_id.push(i);
-}
-
-template<class T>
-void Dict<T>::storeDict(){
-    using namespace std;
-    ofstream out;
-    out.open(dict_file_path);
-    auto iter = wordMap.begin();
-    while(iter != wordMap.end()){
-        out<<(*iter).first<<" "<<(*iter).second.first<<' '<<(*iter).second.second<<'\n';
-        iter++;
-    }
-}
-
-template<class T>
-void Dict<T>::printDict(int id){
-    auto iter = wordMap.find(id);
-    (*iter).second.first.printWordDetail();
-    (*iter).second.se.printWordDetail();
-}
-
-template<class T>
-void Dict<T>::deleteDict(int id){
-    auto iter = wordMap.find(id);
-    wordMap.erase(iter);
-}
-template<class T>
-void Dict<T>::addMap(const int id, const KorDef& kor, const T& lang){
-    unused_id.pop();
-    wordMap.insert((id, (lang, kor)));
-}
 
 
 /*
