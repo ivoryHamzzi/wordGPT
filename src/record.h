@@ -1,3 +1,5 @@
+#ifndef REC_H
+#define REC_H
 #include <list>
 #include <iostream>
 #include <algorithm>
@@ -27,11 +29,11 @@ public:
     int getSize() const {return sz;}
     int getMonth() const {return date.month;}
     int getDay() const {return date.day;}
-    int getScore() const {return score;}
+    //int getScore() const {return score;}
 
-    int setMonth(const int& m) {date.month = (m >= 1 && m <= 12) ? m : 0;}
-    int setDay(const int& d) {date.day = (d >= 1 && d <= 31) ? d : 0;}
-    int setScore(const int& s) {score = s;}
+    void setMonth(const int& m) {date.month = (m >= 1 && m <= 12) ? m : 0;}
+    void setDay(const int& d) {date.day = (d >= 1 && d <= 31) ? d : 0;}
+    void setScore(const int& s) {score = s;}
 
     template<class T>
     void deleteProbs(Dict<T> &dict);
@@ -79,3 +81,4 @@ private:
     int highest_score;
 
 };
+#endif

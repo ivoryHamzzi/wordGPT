@@ -134,59 +134,6 @@ void KorDef::printWordDetail()
     cout << "Definition: " << def << endl;
 }
 
-const KorDef& EngDef::load_from_gpt_from_kor(string str){
-    openai::start();
-    string s = "return word, definition, pronounciation of "+str+
-                " in both korean and english in Json format\n "+
-                    "like\n"+
-                    "{\"word\" : \"\", \n"+
-                    "\"definition\" : \"\", \n"+
-                    "\"pronounciation\" : \"\", \n"+
-                    "\"k_word\" : \"\", \n"+
-                    "\"k_definition\" : \"\", \n"+
-                    "\"k_pronounciation\" : \"\", \n"+
-                    "\"Hanja\" : \"\", \n"+
-                    "}";
-    auto completion = openai::completion().create({
-        {"model", "gpt-3.5-turbo-1106"},
-        {"response_format", "{ \"type\": \"json_object\"}"},
-        {"prompt", s},
-        {"max_tokens", 500},
-        { "temperature", 0}
-    });
-
-    this->word = completion["data"][0]["word"];
-    this->def = completion["data"][0]["definition"];
-    this->pron = completion["data"][0]["pronounciation"];
-    string kw = completion["data"][0]["k_word"];
-    string kd = completion["data"][0]["k_definition"];
-    string kp = completion["data"][0]["k_pronounciation"];
-    string kh = completion["data"][0]["Hanja"];
-    KorDef k(kw, kd, kp, kh);
-    return k;
-}
-
-const KorDef& EngDef::load_from_gpt_to_kor(string str){
-    openai::start();
-}
-
-const KorDef& ChnDef::load_from_gpt_from_kor(string str){
-    openai::start();
-    
-}
-
-const KorDef& ChnDef::load_from_gpt_to_kor(string str){
-    openai::start();
-}
-
-const KorDef& JpnDef::load_from_gpt_from_kor(string str){
-    openai::start();
-}
-
-const KorDef& JpnDef::load_from_gpt_to_kor(string str){
-    openai::start();
-}
-
 istream& operator >> (istream& ins, EngDef& l){
     ins >> l.word >>l.def >>l.pron;
     return ins;

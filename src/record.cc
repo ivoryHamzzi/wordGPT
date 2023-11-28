@@ -52,6 +52,7 @@ istream& operator >> (istream& ins, Rec_probs& rec)
         ins>>tmp.prob>>tmp.ans>>tmp.if_right;
         rec.problems.push_back(tmp);
     }
+    return ins;
 }
 ostream& operator << (ostream& outs, Rec_probs& rec)
 {
@@ -61,6 +62,7 @@ ostream& operator << (ostream& outs, Rec_probs& rec)
         outs<<tmp.prob<<' '<<tmp.ans<<' '<<tmp.if_right<<'\n';
         rec.problems.push_back(tmp);
     }
+    return outs;
 }
 
 template<class T>

@@ -10,11 +10,19 @@ void Dict<T>::loadDict(){
         return;
     int cnt = 0;
     int curId = -1;
-    while(ins>>curID){
-        if(curID != cnt){
-            for(int i = cnt;)
+    while(ins>>curId){
+        if(curId != cnt){
+            for(int i = cnt; i<curId; i++)
+                unused_id.push(i);
         }
+        cnt = curId + 1;
+        T f;
+        KorDef k;
+        cin>>f>>k;
+        wordMap.insert({curId, {f, k}});
     }
+    for(int i = cnt; i < 10000; i++) 
+        unused_id.push(i);
 }
 
 template<class T>

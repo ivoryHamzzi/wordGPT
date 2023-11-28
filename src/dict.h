@@ -18,9 +18,9 @@ template<class T>
 class Dict {
 public:
     Dict(string s):dict_file_path(s) {loadDict();}
-    Dict():dict_file(""){}
+    Dict():dict_file_path(""){}
 
-    int retId(){return unused_id.first();}
+    int retId(){return unused_id.front();}
     void loadDict();
     void storeDict();
     void printDict(int id);

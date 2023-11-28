@@ -5,7 +5,7 @@
 #include "user.h"
 #include "dict.h"
 #include "record.h"
-#include <openai.hpp>
+#include "openai.hpp"
 #include <vector>
 
 using namespace std;
