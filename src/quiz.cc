@@ -62,48 +62,97 @@ Quiz<T>:: Quiz()
 }
 
 
-void Quiz<EngDef>::question(Dict<EngDef>& dict, bool from_korean)
+string Quiz<EngDef>::get_rand_word()
 {
-        //Get from openai the question (English)
-        //Give an response from 4 multiple choices (Korean)
-        string gpt_in;
-        if(from_korean) {
-
-        } else {
-
-        }
-
-
-        //then get the answer.
-        string prob;
-        string ans;
-        bool isAns = true;
-
-        Prob p;
-        p.prob=prob;
-        p.ans=ans;
-        p.if_right=isAns;
-        p.word_id=dict.retId();
-
-        records.push_back(p);
-
-        //load details from gpt anyway
-        KorDef korean(prob, prob, prob, prob);
-        EngDef eng(ans, "", "");
-        dict.addMap(p.word_id, korean, eng);
-        
+        rand_word_prompt["messages"][1]["content"]="Give me an English word in TOEIC difficulty level.";
+        auto completion = openai::chat().create(rand_word_prompt);
+        return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-void Quiz<ChnDef>::question(Dict<ChnDef>& dict, bool from_korean)
+string Quiz<JpnDef>::get_rand_word()
 {
-        //Get from openai the question (Chinese)
-        //Give an response with 4 multiple choices (Korean)
-        //then get the answer.
+        rand_word_prompt["messages"][1]["content"]="Give me an Japanese word in JLPT difficulty level.";
+        auto completion = openai::chat().create(rand_word_prompt);
+        return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-void Quiz<JpnDef>::question(Dict<JpnDef>& dict, bool from_korean)
+string Quiz<ChnDef>::get_rand_word()
 {
-        //Get from openai the question (Japanese)
-        //Give an response with 4 multiple choices (Korean)
-        //then get the answer.
+        rand_word_prompt["messages"][1]["content"]="Give me an Chinese word in HSK difficulty level.";
+        auto completion = openai::chat().create(rand_word_prompt);
+        return completion["choices"][0]["message"]["content"].get<string>();
+}
+
+template<class T>
+bool Quiz<T>::get_if_match(string q, string a)
+{
+        if_match_prompt["message"][1]["content"] = q + " / " + a;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return (completion["choices"][0]["message"]["content"].get<string>()) == "Y";
+}
+
+template<class T>
+string Quiz<T>::get_right_ans(string q)
+{
+        actual_translate_prompt["message"][1]["content"] = q;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return completion["choices"][0]["message"]["content"].get<string>();
+}
+
+openai::Json Quiz<EngDef>::get_foreign_def(string q)
+{
+        foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
+                { 
+                      "word": "word given by user", 
+                      "definition": "definition of the word", 
+                      "pronounciation": "pronounciation of word in english"
+                      
+                  })";
+        foreign_def_prompt["message"][1]["content"] = q;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+}
+
+openai::Json Quiz<JpnDef>::get_foreign_def(string q)
+{
+        foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
+                { 
+                        "word" : "word that will be provided by user",
+                        "definition":"definition of the word in Japanese",
+                        "pronounciation": "pronounciation of the word",
+                        "kanxi":"Kanxi represetation of the given Japanese word"
+                      
+                })";
+        foreign_def_prompt["message"][1]["content"] = q;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+}
+
+openai::Json Quiz<ChnDef>::get_foreign_def(string q)
+{
+        foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
+                { 
+                        "word" : "word that will be provided by user",
+                        "definition" : "definition of the word in chinese",
+                        "pronounciation":"pronounciation of the word",
+                        "kanxi":"Kanxi represetation of the Chinese word"
+                })";
+        foreign_def_prompt["message"][1]["content"] = q;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+}
+
+template<class T>
+openai::Json Quiz<T>::get_Korean_def(string q)
+{
+        korean_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
+                { 
+                      "word": "korean word given by user",
+                      "definition":"definition of the given word in korean",
+                      "pronounciation": "pronounciation of the word in korean",
+                      "hanja" : "chinese character representation of the given korean word. if not exists, set it to null."
+                })";
+        korean_def_prompt["message"][1]["content"] = q;
+        auto completion = openai::chat().create(rand_word_prompt);
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }

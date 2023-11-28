@@ -85,14 +85,13 @@ void QuizHistory::load_rec(const string& s){
     }
 
 }
-void QuizHistory::insertRec(const vector<Prob>& pbs, Language lang)
+void QuizHistory::insertRec(const Rec_probs& pbs)
 {
-    Rec_probs newRec = Rec_probs(pbs, lang);
-    records.push_back(newRec);
-    if(newRec.getScore() > highest_score)highest_score = newRec.getScore();
+    records.push_back(pbs);
+    if(pbs.getScore() > highest_score)highest_score = pbs.getScore();
     sz++;
-    score_sum += newRec.getScore();
-    scores.insert(newRec.getScore());
+    score_sum += pbs.getScore();
+    scores.insert(pbs.getScore());
 }
 
 template<class T>

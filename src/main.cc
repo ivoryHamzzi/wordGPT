@@ -89,18 +89,21 @@ int main(int argc, char* argv[])
                 Quiz<EngDef> quiz;
                 for(int i = 0; i < 5; i++)
                     quiz.question(dict_eng, static_cast<bool>(mode));
+                users.insert_rec(quiz.getRecords());
             }
             break;
             case JAPANESE: {
                 Quiz<JpnDef> quiz;
                 for(int i = 0; i < 5; i++)
                     quiz.question(dict_jpn, static_cast<bool>(mode));
+                users.insert_rec(quiz.getRecords());
             }
             break;
             case CHINESE: {
                 Quiz<ChnDef> quiz;
                 for(int i = 0; i < 5; i++)
                     quiz.question(dict_chn, static_cast<bool>(mode));
+                users.insert_rec(quiz.getRecords());
             }
             break;
             }

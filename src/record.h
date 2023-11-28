@@ -57,7 +57,7 @@ protected:
 class QuizHistory{
 public:
     QuizHistory():score_sum(0),sz(0), highest_score(0) {records = list<Rec_probs>(0);}
-    void insertRec(const vector<Prob>& pbs, Language lang);
+    void insertRec(const Rec_probs& pbs);
     void printRec(int n, int from);
 
     Language getLanguage(int recN);
