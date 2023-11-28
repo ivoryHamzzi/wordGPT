@@ -4,6 +4,7 @@
 #include "lang.h"
 #include "user.h"
 #include "dict.h"
+#include "record.h"
 #include <openai.hpp>
 #include <vector>
 
@@ -24,7 +25,7 @@ public:
         return the record vector to user class;
         they will save it into Rec_probs.
     */
-    const vector<Prob>& getRecords() const {return records;}
+    Rec_probs getRecords() const {return record;}
 
     string get_rand_word();
     bool get_if_match(string q, string a);
@@ -33,6 +34,7 @@ public:
     openai::Json get_Korean_def(string q);
 
 protected:
+    Rec_probs record;
     static openai::Json rand_word_prompt;
     static openai::Json if_match_prompt;
     static openai::Json actual_translate_prompt;
