@@ -76,6 +76,8 @@ void Rec_probs::showDetail(Dict<T> &dict, int index){
 void QuizHistory::load_rec(const string& s){
     ifstream ins;
     ins.open(s);
+    if(ins.fail())
+        return;
     Rec_probs k;
     while(ins>>k){
         records.push_back(k);
