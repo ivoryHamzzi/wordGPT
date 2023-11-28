@@ -14,6 +14,8 @@ int main(int argc, char* argv[])
     //user_init();
     User users; // Multiple users to be implemented
 
+    openai::start(); // Will use the api key provided by `OPENAI_API_KEY` environment variable
+
     bool if_run = true;
     while(if_run) {
         int mode;
