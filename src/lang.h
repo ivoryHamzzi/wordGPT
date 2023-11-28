@@ -16,11 +16,10 @@ public:
     void setWord(const string& w);
 
     const string& get_def();
+    
     void set_def(const string& d);
     
-    virtual const KorDef& load_from_gpt_from_kor(string str){return;}
-    virtual const KorDef& load_from_gpt_to_kor(string str){return;}
-    virtual void printWordDetail(){return;}
+    virtual void printWordDetail();
     
 protected:
     string word;
@@ -36,8 +35,6 @@ public:
 
     friend ostream& operator << (ostream& outs, const EngDef& l);
     friend istream& operator >> (istream& ins, EngDef& l);
-    const KorDef& load_from_gpt_from_kor(string str);
-    const KorDef& load_from_gpt_to_kor(string str);
     void printWordDetail();
 private:
     string pron;
@@ -55,8 +52,6 @@ public:
 
     friend ostream& operator << (ostream& outs, const JpnDef& l);
     friend istream& operator >> (istream& ins, JpnDef& l);
-    const KorDef& load_from_gpt_from_kor(string str);
-    const KorDef& load_from_gpt_to_kor(string str);
     void printWordDetail();
 private:
     string kanxi;
@@ -78,8 +73,6 @@ public:
 
     friend ostream& operator << (ostream& outs, const ChnDef& l);
     friend istream& operator >> (istream& ins, ChnDef& l);
-    const KorDef& load_from_gpt_from_kor(string str);
-    const KorDef& load_from_gpt_to_kor(string str);
 
 private:
     string kanxi;

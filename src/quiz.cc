@@ -62,7 +62,7 @@ Quiz<T>:: Quiz()
     //openai_json["messages"][1]["content"] = ans;
     korean_def_prompt["temperature"] = 0.0;
 }
-void Quiz<EngDef>::question(Dict<EngDef>& dict, bool from_korean)
+template<>void Quiz<EngDef>::question(Dict<EngDef>& dict, bool from_korean)
 {
         vector<Prob> prob_vec(0);
         for(int i=0; i<10; i++){
@@ -101,7 +101,7 @@ void Quiz<EngDef>::question(Dict<EngDef>& dict, bool from_korean)
         
 }
 
-void Quiz<ChnDef>::question(Dict<ChnDef>& dict, bool from_korean)
+template<>void Quiz<ChnDef>::question(Dict<ChnDef>& dict, bool from_korean)
 {
         vector<Prob> prob_vec(0);
         for(int i=0; i<10; i++){
@@ -140,7 +140,7 @@ void Quiz<ChnDef>::question(Dict<ChnDef>& dict, bool from_korean)
         Rec_probs(prob_vec, CHINESE);
 }
 
-void Quiz<JpnDef>::question(Dict<JpnDef>& dict, bool from_korean)
+template<>void Quiz<JpnDef>::question(Dict<JpnDef>& dict, bool from_korean)
 {
         vector<Prob> prob_vec(0);
         for(int i=0; i<10; i++){
@@ -179,21 +179,21 @@ void Quiz<JpnDef>::question(Dict<JpnDef>& dict, bool from_korean)
         Rec_probs(prob_vec, JAPANESE);
 }
 
-string Quiz<EngDef>::get_rand_word()
+template<>string Quiz<EngDef>::get_rand_word()
 {
         rand_word_prompt["messages"][1]["content"]="Give me an English word in TOEIC difficulty level.";
         auto completion = openai::chat().create(rand_word_prompt);
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-string Quiz<JpnDef>::get_rand_word()
+template<>string Quiz<JpnDef>::get_rand_word()
 {
         rand_word_prompt["messages"][1]["content"]="Give me an Japanese word in JLPT difficulty level.";
         auto completion = openai::chat().create(rand_word_prompt);
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-string Quiz<ChnDef>::get_rand_word()
+template<>string Quiz<ChnDef>::get_rand_word()
 {
         rand_word_prompt["messages"][1]["content"]="Give me an Chinese word in HSK difficulty level.";
         auto completion = openai::chat().create(rand_word_prompt);
@@ -216,7 +216,7 @@ string Quiz<T>::get_right_ans(string q)
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-openai::Json Quiz<EngDef>::get_foreign_def(string q)
+template<>openai::Json Quiz<EngDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
                 { 
@@ -230,7 +230,7 @@ openai::Json Quiz<EngDef>::get_foreign_def(string q)
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 
-openai::Json Quiz<JpnDef>::get_foreign_def(string q)
+template<>openai::Json Quiz<JpnDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
                 { 
@@ -245,7 +245,7 @@ openai::Json Quiz<JpnDef>::get_foreign_def(string q)
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 
-openai::Json Quiz<ChnDef>::get_foreign_def(string q)
+template<>openai::Json Quiz<ChnDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
                 { 
