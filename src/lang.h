@@ -36,8 +36,8 @@ public:
     const string& getPronunc();
     void setPronunc(const string& p);
 
-    static string& get_rand_word_prompt();
-    static string& get_foreign_def_prompt();
+    static string get_rand_word_prompt();
+    static string get_foreign_def_prompt();
     
     friend ostream& operator << (ostream& outs, const EngDef& l);
     friend istream& operator >> (istream& ins, EngDef& l);
@@ -58,8 +58,8 @@ public:
     void setKanxi(string k);
     const string& getKanxi();
 
-    static string& get_rand_word_prompt();
-    static string& get_foreign_def_prompt();
+    static string get_rand_word_prompt();
+    static string get_foreign_def_prompt();
     void set_details(openai::Json eng_detail);
 
     friend ostream& operator << (ostream& outs, const JpnDef& l);
@@ -82,8 +82,8 @@ public:
     void setEngRep(string e);
     const string& getEngRep();
 
-    static string& get_rand_word_prompt();
-    static string& get_foreign_def_prompt();
+    static string get_rand_word_prompt();
+    static string get_foreign_def_prompt();
     void set_details(openai::Json eng_detail);
     
     void printWordDetail() const;

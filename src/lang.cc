@@ -168,11 +168,11 @@ ostream& operator << (ostream& outs, const KorDef& l){
     return outs;
 }
 
-string& EngDef::get_rand_word_prompt(){
+string EngDef::get_rand_word_prompt(){
     string s ="Give me an English word in TOEIC difficulty level.";
     return s;
 }
-string& EngDef::get_foreign_def_prompt(){
+string EngDef::get_foreign_def_prompt(){
     string s =	R"(Give details of the word given by user in the following Json format:
                 { 
                       "word": "word given by user", 
@@ -182,11 +182,11 @@ string& EngDef::get_foreign_def_prompt(){
                   })";
     return s;
 }
-string& JpnDef::get_rand_word_prompt(){
+string JpnDef::get_rand_word_prompt(){
     string s ="Give me an Japanese word in JLPT difficulty level.";
     return s;
 }
-string& JpnDef::get_foreign_def_prompt(){
+string JpnDef::get_foreign_def_prompt(){
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
                         "word" : "word that will be provided by user",
@@ -197,11 +197,11 @@ string& JpnDef::get_foreign_def_prompt(){
                 })";
     return s;
 }
-string& ChnDef::get_rand_word_prompt(){
+string ChnDef::get_rand_word_prompt(){
     string s ="Give me an Chinese word in HSK difficulty level.";
     return s;
 }
-string& ChnDef::get_foreign_def_prompt(){
+string ChnDef::get_foreign_def_prompt(){
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
                         "word" : "word that will be provided by user",
