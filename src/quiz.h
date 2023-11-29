@@ -4,6 +4,7 @@
 
 #include "user.h"
 #include "openai.hpp"
+#include "json.hpp"
 
 using namespace std;
 
@@ -48,7 +49,7 @@ string Quiz<T>::get_rand_word()
     rand_word_prompt["messages"][1]["content"]=a.get_rand_word_prompt();
     
     auto completion = openai::chat().create(rand_word_prompt);
-    return completion["choices"][0]["message"]["content"].get<string>();
+    return completion["choices"][0]["message"]["content"].template get<string>();
 }
 
 template<class T>
@@ -77,7 +78,7 @@ string Quiz<T>::get_right_ans(string q)
 template <class T>
 openai::Json Quiz<T>::get_foreign_def(string q)
 {
-    T a;
+    T a;-
         foreign_def_prompt["messages"][0]["content"] = a.get_foreign_def_prompt();
         foreign_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(foreign_def_prompt);
