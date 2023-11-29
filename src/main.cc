@@ -128,6 +128,7 @@ int main(int argc, char* argv[])
         if(!if_run)
             break;
     }
+    // Move these to Deconstructor
     dict_eng.storeDict();
     dict_jpn.storeDict();
     dict_chn.storeDict();
