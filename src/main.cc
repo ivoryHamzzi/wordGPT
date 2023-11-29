@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     Dict<EngDef> dict_eng("./dict_store_eng.txt");
 
     Dict<JpnDef> dict_jpn("./dict_store_jpn.txt");
-    Dict<ChnDef> dict_chn("./dict_store_jpn.txt");
+    Dict<ChnDef> dict_chn("./dict_store_chn.txt");
     //user_init();
     User users("./user_store_eng.txt"); // Multiple users to be implemented
 
@@ -122,4 +122,5 @@ int main(int argc, char* argv[])
     dict_eng.storeDict();
     dict_jpn.storeDict();
     dict_chn.storeDict();
+    users.store_rec();
 }

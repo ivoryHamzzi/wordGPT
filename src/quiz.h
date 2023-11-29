@@ -213,7 +213,8 @@ void Quiz<T>::question(Dict<T>& dict)
             cout << "Question: " << q << endl;
             cout << "Type answer: ";
             string ans;
-            cin >> ans;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            getline(cin, ans);
             bool is_ans = get_if_match(q, ans);
             if(!is_ans) {
                     cout<<"Wrong answer... :(\n";
@@ -251,123 +252,4 @@ void Quiz<T>::question(Dict<T>& dict)
             dict.addMap(problem.word_id, k, e);
         }
 }
-//template<>
-/*
-void Quiz<EngDef>::question(Dict<EngDef>& dict)
-{
-        vector<Prob> prob_vec(0);
-        for(int i=0; i<10; i++){
-                string q = get_rand_word();
-                cout << "Question: " << q << endl;
-                cout << "Type answer: ";
-                string ans;
-                cin >> ans;
-                bool is_ans = get_if_match(q, ans);
-                if(!is_ans) {
-                        cout<<"Wrong answer... :(\n";
-                        ans = get_right_ans(q);
-                        cout<<"The answer is "<<ans<<endl;
-                }
-                openai::Json eng_detail = get_foreign_def(q);
-                string word = eng_detail["word"].get<string>();
-                string def = eng_detail["definition"].get<string>();
-                string pro = eng_detail["pronounciation"].get<string>();
-                EngDef e(word, def, pro);
-                openai::Json kor_detail = get_Korean_def(ans);
-                string kor_word = kor_detail["word"].get<string>();
-                string kor_def = kor_detail["definition"].get<string>();
-                string kor_pro = kor_detail["pronounciation"].get<string>();
-                string kor_h = kor_detail["hanja"].get<string>();
-                KorDef k(kor_word, kor_def, kor_pro, kor_h);
-
-                Prob problem;
-                problem.prob = q;
-                problem.ans = ans;
-                problem.if_right = is_ans;
-                problem.word_id = dict.retId();
-                prob_vec.push_back(problem);
-                dict.addMap(problem.word_id, k, e);
-        }
-        record = Rec_probs(prob_vec, ENGLISH);
-}
-
-//template<>
-void Quiz<ChnDef>::question(Dict<ChnDef>& dict)
-{
-        vector<Prob> prob_vec(0);
-        for(int i=0; i<10; i++){
-                string q = get_rand_word();
-                cout << "Question: " << q << '\n';
-                cout << "Type answer: ";
-                string ans;
-                cin >> ans;
-                bool is_ans = get_if_match(q, ans);
-                if(!is_ans) {
-                        cout<<"wrong.. ";
-                        ans = get_right_ans(q);
-                        cout<<"The answer is "<<ans<<'\n';
-                }
-                openai::Json chn_detail = get_foreign_def(q);
-                string word = chn_detail["word"].get<string>();
-                string def = chn_detail["definition"].get<string>();
-                string pro = chn_detail["pronounciation"].get<string>();
-                string kanxi = chn_detail["kanxi"].get<string>();
-                ChnDef e(word, def, pro, kanxi);
-                openai::Json kor_detail = get_Korean_def(ans);
-                string kor_word = kor_detail["word"].get<string>();
-                string kor_def = kor_detail["definition"].get<string>();
-                string kor_pro = kor_detail["pronounciation"].get<string>();
-                string kor_h = kor_detail["hanja"].get<string>();
-                KorDef k(kor_word, kor_def, kor_pro, kor_h);
-
-                Prob problem;
-                problem.prob = q;
-                problem.ans = ans;
-                problem.if_right = is_ans;
-                problem.word_id = dict.retId();
-                prob_vec.push_back(problem);
-                dict.addMap(problem.word_id, k, e);
-        }
-        record = Rec_probs(prob_vec, CHINESE);
-}
-
-void Quiz<JpnDef>::question(Dict<JpnDef>& dict)
-{
-    vector<Prob> prob_vec(0);
-    for(int i=0; i<10; i++){
-        string q = get_rand_word();
-        cout << "Question: " << q << '\n';
-        cout << "Type answer: ";
-        string ans;
-        cin >> ans;
-        bool is_ans = get_if_match(q, ans);
-        if(!is_ans) {
-                cout<<"wrong.. ";
-                ans = get_right_ans(q);
-                cout<<"The answer is "<<ans<<'\n';
-        }
-        openai::Json jpn_detail = get_foreign_def(q);
-        string word = jpn_detail["word"].get<string>();
-        string def = jpn_detail["definition"].get<string>();
-        string pro = jpn_detail["pronounciation"].get<string>();
-        string kanxi = jpn_detail["kanxi"].get<string>();
-        JpnDef e(word, def, pro, kanxi);
-        openai::Json kor_detail = get_Korean_def(ans);
-        string kor_word = kor_detail["word"].get<string>();
-        string kor_def = kor_detail["definition"].get<string>();
-        string kor_pro = kor_detail["pronounciation"].get<string>();
-        string kor_h = kor_detail["hanja"].get<string>();
-        KorDef k(kor_word, kor_def, kor_pro, kor_h);
-
-        Prob problem;
-        problem.prob = q;
-        problem.ans = ans;
-        problem.if_right = is_ans;
-        problem.word_id = dict.retId();
-        prob_vec.push_back(problem);
-        dict.addMap(problem.word_id, k, e);
-    }
-    record = Rec_probs(prob_vec, JAPANESE);
-}
-*/
 #endif
