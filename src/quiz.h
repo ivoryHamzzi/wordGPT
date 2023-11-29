@@ -4,6 +4,7 @@
 
 #include "user.h"
 #include "openai.hpp"
+#include "json.hpp"
 
 using namespace std;
 
@@ -46,7 +47,7 @@ string Quiz<T>::get_rand_word()
     T a;
     rand_word_prompt["messages"][1]["content"]=a.get_rand_word_prompt();
     auto completion = openai::chat().create(rand_word_prompt);
-    return completion["choices"][0]["message"]["content"].get<string>();
+    return completion["choices"][0]["message"]["content"].template get<string>();
 }
 
 /*
@@ -81,7 +82,7 @@ bool Quiz<T>::get_if_match(string q, string a)
     
         if_match_prompt["message"][1]["content"] = q + " / " + a;
         auto completion = openai::chat().create(rand_word_prompt);
-        return (completion["choices"][0]["message"]["content"].get<string>()) == "Y";
+        return (completion["choices"][0]["message"]["content"].template get<string>()) == "Y";
 }
 
 template<class T>
@@ -89,7 +90,7 @@ string Quiz<T>::get_right_ans(string q)
 {
         actual_translate_prompt["message"][1]["content"] = q;
         auto completion = openai::chat().create(rand_word_prompt);
-        return completion["choices"][0]["message"]["content"].get<string>();
+        return completion["choices"][0]["message"]["content"].template get<string>();
 }
 
 template <class T>
@@ -99,7 +100,7 @@ openai::Json Quiz<T>::get_foreign_def(string q)
         foreign_def_prompt["message"][0]["content"] = a.get_foreign_def_prompt();
         foreign_def_prompt["message"][1]["content"] = q;
         auto completion = openai::chat().create(rand_word_prompt);
-        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
 /*
 //template<>
@@ -160,7 +161,7 @@ openai::Json Quiz<T>::get_Korean_def(string q)
                 })";
         korean_def_prompt["message"][1]["content"] = q;
         auto completion = openai::chat().create(rand_word_prompt);
-        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
 
 template<class T>

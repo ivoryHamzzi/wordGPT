@@ -19,15 +19,6 @@ include_directories(${CURL_INCLUDE_DIRS})
 
 message("Using compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 
-set (TARGETS_EXAMPLES
-    main
-    dict
-    lang
-    quiz
-    record
-    user
-)
-
 add_executable(word_gpt main.cc dict.cc lang.cc quiz.cc record.cc user.cc)
     set_property(TARGET word_gpt PROPERTY CXX_STANDARD 20)
     set_property(TARGET word_gpt PROPERTY CXX_STANDARD_REQUIRED ON)
