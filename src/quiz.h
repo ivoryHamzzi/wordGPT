@@ -39,9 +39,104 @@ protected:
     static openai::Json korean_def_prompt;
 };
 
+template<>
+class Quiz<ChnDef> {
+public:
+    Quiz();
+    /*
+        Get question from GPT,
+        get Answer from User,
+        Check if the answer is right from GPT
+        record it to records
+    */
+    void question(Dict<ChnDef>& dict);
+    /* 
+        return the record vector to user class;
+        they will save it into Rec_probs.
+    */
+    Rec_probs getRecords() const {return record;}
 
+    string get_rand_word();
+    bool get_if_match(string q, string a);
+    string get_right_ans(string q);
+    openai::Json get_foreign_def(string q);
+    openai::Json get_Korean_def(string q);
+
+protected:
+    Rec_probs record;
+    static openai::Json rand_word_prompt;
+    static openai::Json if_match_prompt;
+    static openai::Json actual_translate_prompt;
+    static openai::Json foreign_def_prompt;
+    static openai::Json korean_def_prompt;
+};
 
 template<>
+class Quiz<JpnDef> {
+public:
+    Quiz();
+    /*
+        Get question from GPT,
+        get Answer from User,
+        Check if the answer is right from GPT
+        record it to records
+    */
+    void question(Dict<JpnDef>& dict);
+    /* 
+        return the record vector to user class;
+        they will save it into Rec_probs.
+    */
+    Rec_probs getRecords() const {return record;}
+
+    string get_rand_word();
+    bool get_if_match(string q, string a);
+    string get_right_ans(string q);
+    openai::Json get_foreign_def(string q);
+    openai::Json get_Korean_def(string q);
+
+protected:
+    Rec_probs record;
+    static openai::Json rand_word_prompt;
+    static openai::Json if_match_prompt;
+    static openai::Json actual_translate_prompt;
+    static openai::Json foreign_def_prompt;
+    static openai::Json korean_def_prompt;
+};
+
+template<>
+class Quiz <EngDef> {
+public:
+    Quiz();
+    /*
+        Get question from GPT,
+        get Answer from User,
+        Check if the answer is right from GPT
+        record it to records
+    */
+    void question(Dict<EngDef>& dict);
+    /* 
+        return the record vector to user class;
+        they will save it into Rec_probs.
+    */
+    Rec_probs getRecords() const {return record;}
+
+    string get_rand_word();
+    bool get_if_match(string q, string a);
+    string get_right_ans(string q);
+    openai::Json get_foreign_def(string q);
+    openai::Json get_Korean_def(string q);
+
+protected:
+    Rec_probs record;
+    static openai::Json rand_word_prompt;
+    static openai::Json if_match_prompt;
+    static openai::Json actual_translate_prompt;
+    static openai::Json foreign_def_prompt;
+    static openai::Json korean_def_prompt;
+};
+
+
+//template<>
 string Quiz<EngDef>::get_rand_word()
 {
     rand_word_prompt["messages"][1]["content"]="Give me an English word in TOEIC difficulty level.";
@@ -49,7 +144,7 @@ string Quiz<EngDef>::get_rand_word()
     return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-template<>
+//template<>
 string Quiz<JpnDef>::get_rand_word()
 {
         rand_word_prompt["messages"][1]["content"]="Give me an Japanese word in JLPT difficulty level.";
@@ -57,7 +152,7 @@ string Quiz<JpnDef>::get_rand_word()
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-template<>
+//template<>
 string Quiz<ChnDef>::get_rand_word()
 {
         rand_word_prompt["messages"][1]["content"]="Give me an Chinese word in HSK difficulty level.";
@@ -81,7 +176,7 @@ string Quiz<T>::get_right_ans(string q)
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-template<>
+//template<>
 openai::Json Quiz<EngDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
@@ -96,7 +191,7 @@ openai::Json Quiz<EngDef>::get_foreign_def(string q)
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 
-template<>
+//template<>
 openai::Json Quiz<JpnDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
@@ -112,7 +207,7 @@ openai::Json Quiz<JpnDef>::get_foreign_def(string q)
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 
-template<>
+//template<>
 openai::Json Quiz<ChnDef>::get_foreign_def(string q)
 {
         foreign_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
@@ -198,7 +293,7 @@ Quiz<T>:: Quiz()
     //openai_json["messages"][1]["content"] = ans;
     korean_def_prompt["temperature"] = 0.0;
 }
-template<>
+//template<>
 void Quiz<EngDef>::question(Dict<EngDef>& dict)
 {
         vector<Prob> prob_vec(0);
@@ -237,7 +332,7 @@ void Quiz<EngDef>::question(Dict<EngDef>& dict)
         record = Rec_probs(prob_vec, ENGLISH);
 }
 
-template<>
+//template<>
 void Quiz<ChnDef>::question(Dict<ChnDef>& dict)
 {
         vector<Prob> prob_vec(0);
@@ -277,7 +372,6 @@ void Quiz<ChnDef>::question(Dict<ChnDef>& dict)
         record = Rec_probs(prob_vec, CHINESE);
 }
 
-template<>
 void Quiz<JpnDef>::question(Dict<JpnDef>& dict)
 {
     vector<Prob> prob_vec(0);
