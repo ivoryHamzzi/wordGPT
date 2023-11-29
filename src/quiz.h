@@ -59,7 +59,7 @@ bool Quiz<T>::get_if_match(string q, string a)
         if_match_prompt["messages"][1]["content"] = s;
         auto completion = openai::chat().create(if_match_prompt);
         
-        return (completion["choices"][0]["message"]["content"].get<string>()) == "Y";
+        return (completion["choices"][0]["message"]["content"].template get<string>()) == "Y";
 }
 
 template<class T>
@@ -71,7 +71,7 @@ string Quiz<T>::get_right_ans(string q)
         actual_translate_prompt["messages"][1]["content"] = s;
 
         auto completion = openai::chat().create(actual_translate_prompt);
-        return completion["choices"][0]["message"]["content"].get<string>();
+        return completion["choices"][0]["message"]["content"].template get<string>();
 }
 
 template <class T>
@@ -81,7 +81,7 @@ openai::Json Quiz<T>::get_foreign_def(string q)
         foreign_def_prompt["messages"][0]["content"] = a.get_foreign_def_prompt();
         foreign_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(foreign_def_prompt);
-        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
 
 template<class T>
@@ -96,7 +96,7 @@ openai::Json Quiz<T>::get_Korean_def(string q)
                 })";
         korean_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(korean_def_prompt);
-        return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
+        return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
 
 template<class T>
