@@ -56,6 +56,10 @@ int main(int argc, char* argv[])
             case 1:
                 cout<<"Select record number to delete: ";
                 cin>>rec_num;
+                if(rec_num >= history.getSize()){
+                    cout<<"Bad input. Type record num 0 ~ "<<history.getSize()<<'\n';
+                    break;
+                }
                 switch(history.getLanguage(rec_num)) {
                 case ENGLISH:
                     history.delete_rec(rec_num, dict_eng);
@@ -72,7 +76,13 @@ int main(int argc, char* argv[])
                 break;
             case 2:
                 cout<<"Select record number to show detail: ";
-                cin>>rec_num>>rec_prob;
+                cin>>rec_num;
+                cout<<"Select question number to show detail: ";
+                cin>>rec_prob;
+                if(rec_num >= history.getSize()){
+                    cout<<"Bad input. Type record num 0 ~ "<<history.getSize()<<'\n';
+                    break;
+                }
                 switch(history.getLanguage(rec_num)) {
                 case ENGLISH:
                     history.show_detail(rec_num, rec_prob, dict_eng);
