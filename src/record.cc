@@ -3,7 +3,7 @@
 #include <fstream>
 
 
-Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang):l(lang)
+Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang, int s):l(lang),score(s)
 {
     time_t t = time(NULL);
     setDay(localtime(&t)->tm_mday);
@@ -83,6 +83,7 @@ void QuizHistory::insertRec(const Rec_probs& pbs)
     sz++;
     score_sum += pbs.getScore();
     scores.insert(pbs.getScore());
+    if(highest_score < pbs.getScore())highest_score = pbs.getScore();
 }
 
 void QuizHistory::printRec(int n = 1)
@@ -92,10 +93,10 @@ void QuizHistory::printRec(int n = 1)
         const Rec_probs& cur_rec = *cur;
         cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
-            cout << i + 1 << ". " << endl;
-            cout << "Prob: " << cur_rec[i].prob << endl;
-            cout << "Ans: " << cur_rec[i].ans << endl;
-            cout << (cur_rec[i].if_right ? "Right!" : "Wrong...") << endl;
+            cout << '\t' << i + 1 << ". " << endl;
+            cout << '\t' << "Prob: " << cur_rec[i].prob << endl;
+            cout << '\t' << "Ans: " << cur_rec[i].ans << endl;
+            cout << '\t' << (cur_rec[i].if_right ? "Right!" : "Wrong...") << endl;
         }
         cout << cur_rec.getScore() << '\n';
         cout << endl;

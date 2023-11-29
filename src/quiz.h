@@ -24,7 +24,7 @@ public:
         they will save it into Rec_probs.
     */
     vector<Prob> getRecords() const {return record;}
-
+    int getScore(){return score;}
     string get_rand_word();
     bool get_if_match(string q, string a);
     string get_right_ans(string q);
@@ -33,6 +33,7 @@ public:
 
 protected:
     vector<Prob> record;
+    int score;
     openai::Json rand_word_prompt;
     openai::Json if_match_prompt;
     openai::Json actual_translate_prompt;
@@ -160,15 +161,15 @@ Quiz<T>:: Quiz()
 template <class T>
 void Quiz<T>::question(Dict<T>& dict)
 {
-    
+        score = 0;
         record.clear();
         for(int i=0; i<3; i++){
             cout<<"Question\n";
             string q = get_rand_word();
             cout << "Question: " << q << endl;
-            cout << "Type answer: ";
+            cout << "Type answer\n";
             string ans;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            if(i==0)cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             getline(cin, ans);
             bool is_ans = get_if_match(q, ans);
             if(!is_ans) {
@@ -176,7 +177,10 @@ void Quiz<T>::question(Dict<T>& dict)
                     ans = get_right_ans(q);
                     cout<<"The answer is "<<ans<<endl;
             }
-            else cout<<"Correct!\n";
+            else{
+                cout<<"Correct!\n";
+                score++;
+            } 
             openai::Json eng_detail = get_foreign_def(q);
             /*string word = eng_detail["word"].get<string>();
             string def = eng_detail["definition"].get<string>();

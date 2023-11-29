@@ -24,7 +24,7 @@ struct Prob{
 class Rec_probs{
 public:
     Rec_probs():sz(0), score(0){}
-    Rec_probs(const vector<Prob>& probs, Language lang);
+    Rec_probs(const vector<Prob>& probs, Language lang, int s);
     int getScore() const {return score;}
     int getSize() const {return sz;}
     int getMonth() const {return date.month;}
@@ -57,7 +57,9 @@ protected:
 
 class QuizHistory{
 public:
-    QuizHistory():score_sum(0),sz(0), highest_score(0) {records = list<Rec_probs>(0);}
+    QuizHistory():score_sum(0),sz(0), highest_score(0) {
+        records = list<Rec_probs>(0);
+    }
     void insertRec(const Rec_probs& pbs);
     void printRec(int n);
 
@@ -117,7 +119,15 @@ void QuizHistory::delete_rec(int recN, Dict<T> &dict)
     for(int i=0; i<recN; i++)
         cur++;
     Rec_probs curRec = *cur;
+    int score2 = curRec.getScore()
+    scores.erase(score2);
+    sz --;
+    if(highest_score == score2)highest_score = *scores.begin();    
+    score_sum -= score2;
+
     curRec.deleteProbs(dict);
+    records.erase(cur)
+
 }
 
 template<class T>
