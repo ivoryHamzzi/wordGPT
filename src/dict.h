@@ -24,11 +24,11 @@ public:
     int retId(){return unused_id.front();}
     void loadDict();
     void storeDict();
-    void printDict(int id);
+    void printDict(int id) const;
     void deleteDict(int id);
     void addMap(const int id, const KorDef& kor, const T& lang);
     friend class Rec_probs;
-    friend struct probs;
+    friend struct Prob;
     auto find(int id) {return wordMap.find(id);}
 private:
     map<int, pair<T, KorDef> > wordMap;
@@ -75,10 +75,10 @@ void Dict<T>::storeDict(){
 }
 
 template<class T>
-void Dict<T>::printDict(int id){
+void Dict<T>::printDict(int id)const{
     auto iter = wordMap.find(id);
     (*iter).second.first.printWordDetail();
-    (*iter).second.se.printWordDetail();
+    (*iter).second.second.printWordDetail();
 }
 
 template<class T>

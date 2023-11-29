@@ -19,7 +19,7 @@ public:
     
     void set_def(const string& d);
     
-    virtual void printWordDetail();
+    virtual void printWordDetail() const;
     
 protected:
     string word;
@@ -36,7 +36,7 @@ public:
 
     friend ostream& operator << (ostream& outs, const EngDef& l);
     friend istream& operator >> (istream& ins, EngDef& l);
-    void printWordDetail();
+    void printWordDetail() const;
 private:
     string pron;
 };
@@ -54,7 +54,7 @@ public:
 
     friend ostream& operator << (ostream& outs, const JpnDef& l);
     friend istream& operator >> (istream& ins, JpnDef& l);
-    void printWordDetail();
+    void printWordDetail() const;
 private:
     string kanxi;
     string pron;
@@ -72,7 +72,7 @@ public:
     void setEngRep(string e);
     const string& getEngRep();
 
-    void printWordDetail();
+    void printWordDetail() const;
 
     friend ostream& operator << (ostream& outs, const ChnDef& l);
     friend istream& operator >> (istream& ins, ChnDef& l);
@@ -96,7 +96,7 @@ public:
 
     friend ostream& operator << (ostream& outs, const KorDef& l);
     friend istream& operator >> (istream& ins, KorDef& l);
-    void printWordDetail();
+    void printWordDetail() const;
 
 private:
     string pron;

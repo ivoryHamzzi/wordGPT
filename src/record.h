@@ -92,8 +92,8 @@ void Prob::showDetail(const Dict<T>& dict)
 template<class T>
 void Prob::deleteProb(Dict<T>& dict)
 {
-    auto iter = dict.find(word_id);
-    dict.wordMap.erase(iter);
+    //auto iter = dict.find(word_id);
+    dict.deleteDict(word_id);
     dict.unused_id.push(word_id);
 }
 

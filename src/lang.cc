@@ -22,7 +22,7 @@ void LangDef::set_def(const string& d)
     def = d;
 }
 
-void LangDef::printWordDetail()
+void LangDef::printWordDetail() const
 {
     using std::cout;
     using std::endl;
@@ -41,7 +41,7 @@ void EngDef::setPronunc(const string& p)
     pron = p;
 }
 
-void EngDef::printWordDetail()
+void EngDef::printWordDetail() const
 {
     using std::cout;
     using std::endl;
@@ -70,7 +70,7 @@ const string& JpnDef::getKanxi()
     return kanxi;
 }
 
-void JpnDef::printWordDetail()
+void JpnDef::printWordDetail() const
 {
     using std::cout;
     using std::endl;
@@ -100,7 +100,7 @@ const string& ChnDef::getEngRep()
     return eng_rep;
 }
 
-void ChnDef::printWordDetail()
+void ChnDef::printWordDetail() const
 {
     cout << "Word: " << word << '[' << eng_rep << ']' << '\n';
     cout << "Kanxi: " << kanxi << '\n';
@@ -127,7 +127,7 @@ void KorDef::setHanja(const string& h)
     hanja_rep = h;
 }
 
-void KorDef::printWordDetail()
+void KorDef::printWordDetail() const
 {
     cout << "Word: " << word << '[' << pron << ']' << '\n';
     cout << "Hanja: " << hanja_rep << '\n';
