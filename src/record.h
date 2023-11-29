@@ -24,7 +24,7 @@ struct Prob{
 class Rec_probs{
 public:
     Rec_probs():sz(0), score(0){}
-    Rec_probs(const vector<Prob>& probs, Language lang, int s);
+    Rec_probs(const vector<Prob>& probs, Language lang);
     int getScore() const {return score;}
     int getSize() const {return sz;}
     int getMonth() const {return date.month;}
@@ -119,14 +119,14 @@ void QuizHistory::delete_rec(int recN, Dict<T> &dict)
     for(int i=0; i<recN; i++)
         cur++;
     Rec_probs curRec = *cur;
-    int score2 = curRec.getScore()
+    int score2 = curRec.getScore();
     scores.erase(score2);
     sz --;
     if(highest_score == score2)highest_score = *scores.begin();    
     score_sum -= score2;
 
     curRec.deleteProbs(dict);
-    records.erase(cur)
+    records.erase(cur);
 
 }
 

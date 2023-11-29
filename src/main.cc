@@ -95,19 +95,19 @@ int main(int argc, char* argv[])
             case ENGLISH: {
                 Quiz<EngDef> quiz;
                 quiz.question(dict_eng);
-                users.insert_rec(Rec_probs(quiz.getRecords(), ENGLISH, quiz.getScore()));
+                users.insert_rec(Rec_probs(quiz.getRecords(), ENGLISH));
             }
             break;
             case JAPANESE: {
                 Quiz<JpnDef> quiz;
                 quiz.question(dict_jpn);
-                users.insert_rec(Rec_probs(quiz.getRecords(), JAPANESE, quiz.getScore()));
+                users.insert_rec(Rec_probs(quiz.getRecords(), JAPANESE));
             }
             break;
             case CHINESE: {
                 Quiz<ChnDef> quiz;
                 quiz.question(dict_chn);
-                users.insert_rec(Rec_probs(quiz.getRecords(), CHINESE, quiz.getScore()));
+                users.insert_rec(Rec_probs(quiz.getRecords(), CHINESE));
             }
             break;
             }

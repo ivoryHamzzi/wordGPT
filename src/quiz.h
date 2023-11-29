@@ -4,7 +4,6 @@
 
 #include "user.h"
 #include "openai.hpp"
-#include "json.hpp"
 
 using namespace std;
 

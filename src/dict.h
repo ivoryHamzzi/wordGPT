@@ -41,6 +41,7 @@ private:
 template<class T>
 void Dict<T>::loadDict(){
     using namespace std;
+    cout<<'1';
     ifstream ins;
     ins.open(dict_file_path);
     if(ins.fail()){
@@ -52,13 +53,16 @@ void Dict<T>::loadDict(){
     int curId = -1;
     string id_str;
     while(getline(ins, id_str, '#') && (!ins.eof())){
+        cout<<id_str<<'\n';
         curId = stoi(id_str);
         for(int i = cnt; i<curId; i++)
             unused_id.push(i);
         cnt = curId + 1;
+        cout<<curId<<'\n';
         T f;
         KorDef k;
         ins>>f>>k;
+        cout<<f<<k;
         wordMap.insert({curId, {f, k}});
     }
     for(int i = cnt; i < 10000; i++) 

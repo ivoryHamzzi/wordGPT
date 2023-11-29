@@ -3,7 +3,7 @@
 #include <fstream>
 
 
-Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang, int s):l(lang),score(s)
+Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang):l(lang)
 {
     time_t t = time(NULL);
     setDay(localtime(&t)->tm_mday);
@@ -56,22 +56,38 @@ vector<Prob> problems;
 */
 istream& operator >> (istream& ins, Rec_probs& rec)
 {
-    ins>>rec.sz>>rec.date.month>>rec.date.day>>rec.score;
+    string sz, dm, dd, sc;
+    getline(ins, sz, '#');
+    getline(ins, dm, '#');
+    getline(ins, dd, '#');
+    getline(ins, sc, '#');
+    rec.sz = stoi(sz);
+    rec.date.month = stoi(dm);
+    rec.date.day = stoi(dm);
+    rec.score = stoi(sc);
     rec.problems.reserve(rec.sz);
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
-        ins>>tmp.prob>>tmp.ans>>tmp.if_right;
+        getline(ins, tmp.prob, '#');
+        getline(ins, tmp.ans, '#');
+        string b;
+        getline(ins, b, '#');
+        if(b.compare("t")==0) tmp.if_right = true;
+        else tmp.if_right = false;
         rec.problems.push_back(tmp);
     }
     return ins;
 }
 ostream& operator << (ostream& outs, Rec_probs& rec)
 {
-    outs<<rec.sz<<' '<<rec.date.month<<' '<<rec.date.day<<' '<<rec.score<<' ';
+    outs<<rec.sz<<'#'<<rec.date.month<<'#'<<rec.date.day<<'#'<<rec.score<<'#';
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
-        outs<<tmp.prob<<' '<<tmp.ans<<' '<<tmp.if_right<<'\n';
-        rec.problems.push_back(tmp);
+        tmp = rec.problems[i];
+        outs<<tmp.prob<<'#'<<tmp.ans<<'#';
+        if(tmp.if_right)outs<<'t'<<'#';
+        else outs<<'f'<<'#';
+        
     }
     return outs;
 }
