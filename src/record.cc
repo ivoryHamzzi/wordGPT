@@ -58,7 +58,7 @@ vector<Prob> problems;
 istream& operator >> (istream& ins, Rec_probs& rec)
 {
 
-    string sz, dm, dd, sc;
+    string sz, dm, dd, sc, lg;
     if(ins.eof())return ins;
     getline(ins, sz, '#');
     if(ins.eof())return ins;
@@ -68,11 +68,17 @@ istream& operator >> (istream& ins, Rec_probs& rec)
     if(ins.eof())return ins;
     getline(ins, sc, '#');
     if(ins.eof())return ins;
+    getline(ins, lg, '#');
+    if(ins.eof())return ins;
     rec.sz = stoi(sz);
     rec.date.month = stoi(dm);
     rec.date.day = stoi(dm);
     rec.score = stoi(sc);
     rec.problems.reserve(rec.sz);
+    int l_int = stoi(lg);
+    if(l_int == 0)rec.l=ENGLISH;
+    if(l_int == 1)rec.l=JAPANESE;
+    if(l_int == 2)rec.l=CHINESE;
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
         getline(ins, tmp.prob, '#');
@@ -81,6 +87,9 @@ istream& operator >> (istream& ins, Rec_probs& rec)
         getline(ins, b, '#');
         if(b.compare("t")==0) tmp.if_right = true;
         else tmp.if_right = false;
+        string id_str;
+        getline(ins, id_str, '#');
+        tmp.word_id = stoi(id_str);
         rec.problems.push_back(tmp);
     }
     return ins;
@@ -88,13 +97,16 @@ istream& operator >> (istream& ins, Rec_probs& rec)
 ostream& operator << (ostream& outs, Rec_probs& rec)
 {
     outs<<rec.sz<<'#'<<rec.date.month<<'#'<<rec.date.day<<'#'<<rec.score<<'#';
+    if(rec.l == ENGLISH)outs<<0<<'#';
+    if(rec.l == JAPANESE)outs<<1<<'#';
+    if(rec.l == CHINESE)outs<<2<<'#';
     Prob tmp;
     for(int i=0; i<rec.sz; i++){
         tmp = rec.problems[i];
         outs<<tmp.prob<<'#'<<tmp.ans<<'#';
         if(tmp.if_right)outs<<'t'<<'#';
         else outs<<'f'<<'#';
-        
+        outs<<tmp.word_id<<'#';
     }
     return outs;
 }
