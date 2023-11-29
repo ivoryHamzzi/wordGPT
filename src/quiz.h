@@ -45,6 +45,7 @@ string Quiz<T>::get_rand_word()
 {
     T a;
     rand_word_prompt["messages"][1]["content"]=a.get_rand_word_prompt();
+    
     auto completion = openai::chat().create(rand_word_prompt);
     return completion["choices"][0]["message"]["content"].get<string>();
 }
@@ -166,6 +167,7 @@ openai::Json Quiz<T>::get_Korean_def(string q)
 template<class T>
 Quiz<T>:: Quiz()
 {
+    cout<<"Quiz init\n";
     rand_word_prompt["model"]="gpt-3.5-turbo";
     rand_word_prompt["messages"][0]["role"]="system";
     rand_word_prompt["messages"][0]["content"]="Answer only in a single word. Do not make the same response you made before.";
@@ -223,6 +225,7 @@ Quiz<T>:: Quiz()
 template <class T>
 void Quiz<T>::question(Dict<T>& dict)
 {
+    cout<<"Question\n";
         vector<Prob> prob_vec(0);
         for(int i=0; i<10; i++){
                 string q = get_rand_word();

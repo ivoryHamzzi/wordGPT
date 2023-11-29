@@ -31,7 +31,10 @@ int main(int argc, char* argv[])
         QuizHistory& history = users.rec;
         switch(mode) {
         case 1: // RECORD mode
-            
+            if(history.getSize()==0){
+                cout<< "No record\n";
+                break;
+            }
             cout<<"Average score: "<<static_cast<float>(history.getScore())/history.getSize()<<'\n';
             cout<<"Highest score: "<<history.getMaxScore()<<'\n';
             cout<<"Threre are total "<<history.getSize()<<
