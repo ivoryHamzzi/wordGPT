@@ -213,22 +213,43 @@ string ChnDef::get_foreign_def_prompt(){
 }
 
 void EngDef::set_details(openai::Json eng_detail){
-    word = eng_detail["word"].get<string>();
-    def = eng_detail["definition"].get<string>();
-    pron = eng_detail["pronounciation"].get<string>();
+    word = "null";
+    def = "null";
+    pron = "null";
+    if(eng_detail["word"].is_null() == false) 
+        word = eng_detail["word"].get<string>();
+    if(eng_detail["definition"].is_null() == false)
+        def = eng_detail["definition"].get<string>();
+    if(eng_detail["pronounciation"].is_null() == false)
+        pron = eng_detail["pronounciation"].get<string>();
 }
 
 void JpnDef::set_details(openai::Json jpn_detail){
-    word = jpn_detail["word"].get<string>();
-    def = jpn_detail["definition"].get<string>();
-    pron = jpn_detail["pronounciation"].get<string>();
-    kanxi = jpn_detail["kanxi"].get<string>();
-        
+    word = "null";
+    def = "null";
+    pron = "null";
+    kanxi = "null";
+    if(jpn_detail["word"].is_null() == false)
+        word = jpn_detail["word"].get<string>();
+    if(jpn_detail["definition"].is_null() == false)
+        def = jpn_detail["definition"].get<string>();
+    if(jpn_detail["pronounciation"].is_null() == false)
+        pron = jpn_detail["pronounciation"].get<string>();
+    if(jpn_detail["kanxi"].is_null() == false)
+        kanxi = jpn_detail["kanxi"].get<string>();      
 }
 
 void ChnDef::set_details(openai::Json chn_detail){
-    word = chn_detail["word"].get<string>();
-    def = chn_detail["definition"].get<string>();
-    eng_rep = chn_detail["pronounciation"].get<string>();
-    kanxi = chn_detail["kanxi"].get<string>();
+    word = "null";
+    def = "null";
+    eng_rep = "null";
+    kanxi = "null";
+    if(chn_detail["word"].is_null() == false)
+        word = chn_detail["word"].get<string>();
+    if(chn_detail["definition"].is_null() == false)
+        def = chn_detail["definition"].get<string>();
+    if(chn_detail["pronounciation"].is_null() == false)
+        eng_rep = chn_detail["pronounciation"].get<string>();
+    if(chn_detail["kanxi"].is_null() == false)
+        kanxi = chn_detail["kanxi"].get<string>();      
 }

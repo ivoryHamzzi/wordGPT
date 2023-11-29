@@ -22,7 +22,7 @@ public:
         return the record vector to user class;
         they will save it into Rec_probs.
     */
-    Rec_probs getRecords() const {return record;}
+    vector<Prob> getRecords() const {return record;}
 
     string get_rand_word();
     bool get_if_match(string q, string a);
@@ -31,7 +31,7 @@ public:
     openai::Json get_Korean_def(string q);
 
 protected:
-    Rec_probs record;
+    vector<Prob> record;
     openai::Json rand_word_prompt;
     openai::Json if_match_prompt;
     openai::Json actual_translate_prompt;
@@ -50,46 +50,26 @@ string Quiz<T>::get_rand_word()
     return completion["choices"][0]["message"]["content"].get<string>();
 }
 
-/*
-//template<>
-string Quiz<EngDef>::get_rand_word()
-{
-    rand_word_prompt["messages"][1]["content"]="Give me an English word in TOEIC difficulty level.";
-    auto completion = openai::chat().create(rand_word_prompt);
-    return completion["choices"][0]["message"]["content"].get<string>();
-}
-
-//template<>
-string Quiz<JpnDef>::get_rand_word()
-{
-        rand_word_prompt["messages"][1]["content"]="Give me an Japanese word in JLPT difficulty level.";
-        auto completion = openai::chat().create(rand_word_prompt);
-        return completion["choices"][0]["message"]["content"].get<string>();
-}
-
-//template<>
-string Quiz<ChnDef>::get_rand_word()
-{
-        rand_word_prompt["messages"][1]["content"]="Give me an Chinese word in HSK difficulty level.";
-        auto completion = openai::chat().create(rand_word_prompt);
-        return completion["choices"][0]["message"]["content"].get<string>();
-}
-*/
-
 template<class T>
 bool Quiz<T>::get_if_match(string q, string a)
 {
-    
-        if_match_prompt["message"][1]["content"] = q + " / " + a;
-        auto completion = openai::chat().create(rand_word_prompt);
+        cout<< q + " / " + a<<'\n';
+        string s = q + " / " + a;
+        if_match_prompt["messages"][1]["content"] = s;
+        auto completion = openai::chat().create(if_match_prompt);
+        
         return (completion["choices"][0]["message"]["content"].get<string>()) == "Y";
 }
 
 template<class T>
 string Quiz<T>::get_right_ans(string q)
 {
-        actual_translate_prompt["message"][1]["content"] = q;
-        auto completion = openai::chat().create(rand_word_prompt);
+    string s = "What is ";
+    s += q;
+    s += " in Korean?";
+        actual_translate_prompt["messages"][1]["content"] = s;
+
+        auto completion = openai::chat().create(actual_translate_prompt);
         return completion["choices"][0]["message"]["content"].get<string>();
 }
 
@@ -97,9 +77,9 @@ template <class T>
 openai::Json Quiz<T>::get_foreign_def(string q)
 {
     T a;
-        foreign_def_prompt["message"][0]["content"] = a.get_foreign_def_prompt();
-        foreign_def_prompt["message"][1]["content"] = q;
-        auto completion = openai::chat().create(rand_word_prompt);
+        foreign_def_prompt["messages"][0]["content"] = a.get_foreign_def_prompt();
+        foreign_def_prompt["messages"][1]["content"] = q;
+        auto completion = openai::chat().create(foreign_def_prompt);
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 /*
@@ -152,15 +132,15 @@ openai::Json Quiz<ChnDef>::get_foreign_def(string q)
 template<class T>
 openai::Json Quiz<T>::get_Korean_def(string q)
 {
-        korean_def_prompt["message"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
+        korean_def_prompt["messages"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
                 { 
                       "word": "korean word given by user",
                       "definition":"definition of the given word in korean",
                       "pronounciation": "pronounciation of the word in korean",
                       "hanja" : "chinese character representation of the given korean word. if not exists, set it to null."
                 })";
-        korean_def_prompt["message"][1]["content"] = q;
-        auto completion = openai::chat().create(rand_word_prompt);
+        korean_def_prompt["messages"][1]["content"] = q;
+        auto completion = openai::chat().create(korean_def_prompt);
         return openai::Json::parse(completion["choices"][0]["message"]["content"].get<string>());
 }
 
@@ -225,42 +205,51 @@ Quiz<T>:: Quiz()
 template <class T>
 void Quiz<T>::question(Dict<T>& dict)
 {
-    cout<<"Question\n";
-        vector<Prob> prob_vec(0);
-        for(int i=0; i<10; i++){
-                string q = get_rand_word();
-                cout << "Question: " << q << endl;
-                cout << "Type answer: ";
-                string ans;
-                cin >> ans;
-                bool is_ans = get_if_match(q, ans);
-                if(!is_ans) {
-                        cout<<"Wrong answer... :(\n";
-                        ans = get_right_ans(q);
-                        cout<<"The answer is "<<ans<<endl;
-                }
-                openai::Json eng_detail = get_foreign_def(q);
-                /*string word = eng_detail["word"].get<string>();
-                string def = eng_detail["definition"].get<string>();
-                string pro = eng_detail["pronounciation"].get<string>();*/
-                T e;
-                e.set_details(eng_detail);
-                openai::Json kor_detail = get_Korean_def(ans);
-                string kor_word = kor_detail["word"].get<string>();
-                string kor_def = kor_detail["definition"].get<string>();
-                string kor_pro = kor_detail["pronounciation"].get<string>();
-                string kor_h = kor_detail["hanja"].get<string>();
-                KorDef k(kor_word, kor_def, kor_pro, kor_h);
+    
+        record.clear();
+        for(int i=0; i<3; i++){
+            cout<<"Question\n";
+            string q = get_rand_word();
+            cout << "Question: " << q << endl;
+            cout << "Type answer: ";
+            string ans;
+            cin >> ans;
+            bool is_ans = get_if_match(q, ans);
+            if(!is_ans) {
+                    cout<<"Wrong answer... :(\n";
+                    ans = get_right_ans(q);
+                    cout<<"The answer is "<<ans<<endl;
+            }
+            else cout<<"Correct!\n";
+            openai::Json eng_detail = get_foreign_def(q);
+            /*string word = eng_detail["word"].get<string>();
+            string def = eng_detail["definition"].get<string>();
+            string pro = eng_detail["pronounciation"].get<string>();*/
+            T e;
+            e.set_details(eng_detail);
+            openai::Json kor_detail = get_Korean_def(ans);
+            string kor_word = "null";
+            string kor_def= "null";
+            string kor_pro = "null";
+            string kor_h = "null";
+            if(kor_detail["word"].is_null() == false)
+                kor_word = kor_detail["word"].get<string>();
+            if(kor_detail["definition"].is_null() == false)
+                kor_def = kor_detail["definition"].get<string>();
+            if(kor_detail["pronounciation"].is_null() == false)
+                kor_pro = kor_detail["pronounciation"].get<string>();
+            if(kor_detail["hanja"].is_null() == false)
+                kor_h = kor_detail["hanja"].get<string>();
+            KorDef k(kor_word, kor_def, kor_pro, kor_h);
 
-                Prob problem;
-                problem.prob = q;
-                problem.ans = ans;
-                problem.if_right = is_ans;
-                problem.word_id = dict.retId();
-                prob_vec.push_back(problem);
-                dict.addMap(problem.word_id, k, e);
+            Prob problem;
+            problem.prob = q;
+            problem.ans = ans;
+            problem.if_right = is_ans;
+            problem.word_id = dict.retId();
+            record.push_back(problem);
+            dict.addMap(problem.word_id, k, e);
         }
-        record = Rec_probs(prob_vec, ENGLISH);
 }
 //template<>
 /*

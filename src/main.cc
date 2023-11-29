@@ -94,23 +94,21 @@ int main(int argc, char* argv[])
             switch(lang_int) {
             case ENGLISH: {
                 Quiz<EngDef> quiz;
-                for(int i = 0; i < 5; i++)
+                
                     quiz.question(dict_eng);
-                users.insert_rec(quiz.getRecords());
+                users.insert_rec(Rec_probs(quiz.getRecords(), ENGLISH));
             }
             break;
             case JAPANESE: {
                 Quiz<JpnDef> quiz;
-                for(int i = 0; i < 5; i++)
                     quiz.question(dict_jpn);
-                users.insert_rec(quiz.getRecords());
+                users.insert_rec(Rec_probs(quiz.getRecords(), JAPANESE));
             }
             break;
             case CHINESE: {
                 Quiz<ChnDef> quiz;
-                for(int i = 0; i < 5; i++)
                     quiz.question(dict_chn);
-                users.insert_rec(quiz.getRecords());
+                users.insert_rec(Rec_probs(quiz.getRecords(), CHINESE));
             }
             break;
             }
