@@ -57,8 +57,9 @@ protected:
 
 class QuizHistory{
 public:
-    QuizHistory():score_sum(0),sz(0), highest_score(0) {
+    QuizHistory():score_sum(0),sz(0) {
         records = list<Rec_probs>(0);
+        scores.clear();
     }
     void insertRec(const Rec_probs& pbs);
     void printRec(int n);
@@ -81,8 +82,6 @@ private:
     long score_sum;
     multiset<int> scores;
     int sz;
-    int highest_score;
-
 };
 
 
@@ -122,7 +121,6 @@ void QuizHistory::delete_rec(int recN, Dict<T> &dict)
     int score2 = curRec.getScore();
     scores.erase(score2);
     sz --;
-    if(highest_score == score2)highest_score = *scores.begin();    
     score_sum -= score2;
 
     curRec.deleteProbs(dict);

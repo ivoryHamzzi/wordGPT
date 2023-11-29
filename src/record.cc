@@ -9,10 +9,13 @@ Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang):l(lang)
     setDay(localtime(&t)->tm_mday);
     setMonth(localtime(&t)->tm_mon + 1);
     problems = vector<Prob>(probs.begin(), probs.end());
+    score = 0;
     for(auto& p: probs)
         score += p.if_right ? 1 : 0;
     sz = problems.size();
 }
+
+/* Load history from the given file */
 void QuizHistory::load_rec(const string& s){
     ifstream ins;
     ins.open(s);
@@ -22,7 +25,7 @@ void QuizHistory::load_rec(const string& s){
     while(ins>>k){
         if(ins.eof())break;
         records.push_back(k);
-        if(k.getScore()>highest_score)scores.insert(k.getScore());
+        scores.insert(k.getScore());
         score_sum+=k.getScore();
         sz++;
     }
@@ -34,7 +37,7 @@ void QuizHistory::store_rec(const string& s){
     outs.open(s);
     if(outs.fail())
         return;
-    for(Rec_probs x : records){
+    for(Rec_probs& x : records){
         outs<<x;
     }
 }
@@ -114,11 +117,9 @@ ostream& operator << (ostream& outs, Rec_probs& rec)
 void QuizHistory::insertRec(const Rec_probs& pbs)
 {
     records.push_back(pbs);
-    if(pbs.getScore() > highest_score)highest_score = pbs.getScore();
     sz++;
     score_sum += pbs.getScore();
     scores.insert(pbs.getScore());
-    if(highest_score < pbs.getScore())highest_score = pbs.getScore();
 }
 
 void QuizHistory::printRec(int n = 1)
