@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
                     history.delete_rec(rec_num, dict_eng);
                     break;
                 case JAPANESE:
-                    history.delete_rec(rec_num, dict_chn);
+                    history.delete_rec(rec_num, dict_jpn);
                     break;
                 case CHINESE:
                     history.delete_rec(rec_num, dict_chn);
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
                     history.show_detail(rec_num, rec_prob, dict_eng);
                     break;
                 case JAPANESE:
-                    history.show_detail(rec_num, rec_prob, dict_chn);
+                    history.show_detail(rec_num, rec_prob, dict_jpn);
                     break;
                 case CHINESE:
                     history.show_detail(rec_num, rec_prob, dict_chn);
