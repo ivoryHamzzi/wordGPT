@@ -27,6 +27,17 @@ void QuizHistory::load_rec(const string& s){
     }
 
 }
+
+void QuizHistory::store_rec(const string& s){
+    ofstream outs;
+    outs.open(s);
+    if(outs.fail())
+        return;
+    for(Rec_probs x : records){
+        outs<<x;
+    }
+}
+
 Prob Rec_probs::operator[] (int n) const
 {
     if(n < 0 || n >= sz) 

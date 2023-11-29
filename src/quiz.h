@@ -168,7 +168,8 @@ void Quiz<T>::question(Dict<T>& dict)
             cout << "Question: " << q << endl;
             cout << "Type answer: ";
             string ans;
-            cin >> ans;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            getline(cin, ans);
             bool is_ans = get_if_match(q, ans);
             if(!is_ans) {
                     cout<<"Wrong answer... :(\n";

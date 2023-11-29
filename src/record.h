@@ -69,6 +69,7 @@ public:
 
 
     void load_rec(const string& s);
+    void store_rec(const string& s);
     long getScore() const {return score_sum;}
     int getSize() const {return sz;}
     int getMaxScore() const {return *(scores.end()--);}

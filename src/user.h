@@ -11,6 +11,7 @@ public:
     User():rec_file(""){}
 
     void insert_rec(const Rec_probs& r) {rec.insertRec(r);}
+    void store_rec() {rec.store_rec(rec_file);}
     QuizHistory& getRec(){return rec;}
     QuizHistory rec;
 private:

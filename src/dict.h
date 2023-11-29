@@ -43,8 +43,11 @@ void Dict<T>::loadDict(){
     using namespace std;
     ifstream ins;
     ins.open(dict_file_path);
-    if(ins.fail())
+    if(ins.fail()){
+        for(int i = 0; i < 10000; i++) 
+            unused_id.push(i);
         return;
+    }
     int cnt = 0;
     int curId = -1;
     while(ins>>curId){
@@ -69,7 +72,7 @@ void Dict<T>::storeDict(){
     out.open(dict_file_path);
     auto iter = wordMap.begin();
     while(iter != wordMap.end()){
-        out<<(*iter).first<<" "<<(*iter).second.first<<' '<<(*iter).second.second<<'\n';
+        out<<(*iter).first<<'\n'<<(*iter).second.first<<(*iter).second.second;
         iter++;
     }
 }
