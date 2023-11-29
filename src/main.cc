@@ -9,6 +9,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     Dict<EngDef> dict_eng("./dict_store_eng.txt");
+
     Dict<JpnDef> dict_jpn("./dict_store_jpn.txt");
     Dict<ChnDef> dict_chn("./dict_store_jpn.txt");
     //user_init();

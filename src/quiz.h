@@ -1,13 +1,9 @@
 #ifndef QUIZ_H
 #define QUIZ_H
 
-#include "lang.h"
+
 #include "user.h"
-#include "dict.h"
-#include "record.h"
 #include "openai.hpp"
-#include <vector>
-#include <string>
 
 using namespace std;
 
@@ -238,8 +234,7 @@ void Quiz<EngDef>::question(Dict<EngDef>& dict)
                 prob_vec.push_back(problem);
                 dict.addMap(problem.word_id, k, e);
         }
-        Rec_probs(prob_vec, ENGLISH);
-        
+        record = Rec_probs(prob_vec, ENGLISH);
 }
 
 template<>
@@ -279,7 +274,7 @@ void Quiz<ChnDef>::question(Dict<ChnDef>& dict)
                 prob_vec.push_back(problem);
                 dict.addMap(problem.word_id, k, e);
         }
-        Rec_probs(prob_vec, CHINESE);
+        record = Rec_probs(prob_vec, CHINESE);
 }
 
 template<>
@@ -319,6 +314,6 @@ void Quiz<JpnDef>::question(Dict<JpnDef>& dict)
         prob_vec.push_back(problem);
         dict.addMap(problem.word_id, k, e);
     }
-    Rec_probs(prob_vec, JAPANESE);
+    record = Rec_probs(prob_vec, JAPANESE);
 }
 #endif
