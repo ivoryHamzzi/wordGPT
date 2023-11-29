@@ -20,6 +20,7 @@ void QuizHistory::load_rec(const string& s){
         return;
     Rec_probs k;
     while(ins>>k){
+        if(ins.eof())break;
         records.push_back(k);
         if(k.getScore()>highest_score)scores.insert(k.getScore());
         score_sum+=k.getScore();
@@ -56,11 +57,17 @@ vector<Prob> problems;
 */
 istream& operator >> (istream& ins, Rec_probs& rec)
 {
+
     string sz, dm, dd, sc;
+    if(ins.eof())return ins;
     getline(ins, sz, '#');
+    if(ins.eof())return ins;
     getline(ins, dm, '#');
+    if(ins.eof())return ins;
     getline(ins, dd, '#');
+    if(ins.eof())return ins;
     getline(ins, sc, '#');
+    if(ins.eof())return ins;
     rec.sz = stoi(sz);
     rec.date.month = stoi(dm);
     rec.date.day = stoi(dm);
