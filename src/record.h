@@ -107,20 +107,7 @@ void Rec_probs::showDetail(Dict<T> &dict, int index){
     problems[index].showDetail(dict);
 }
 
-void QuizHistory::load_rec(const string& s){
-    ifstream ins;
-    ins.open(s);
-    if(ins.fail())
-        return;
-    Rec_probs k;
-    while(ins>>k){
-        records.push_back(k);
-        if(k.getScore()>highest_score)scores.insert(k.getScore());
-        score_sum+=k.getScore();
-        sz++;
-    }
 
-}
 
 template<class T>
 void QuizHistory::delete_rec(int recN, Dict<T> &dict)

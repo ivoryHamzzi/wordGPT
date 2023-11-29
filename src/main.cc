@@ -1,5 +1,3 @@
-#include "user.h"
-#include "dict.h"
 #include "quiz.h"
 
 #include <iostream>

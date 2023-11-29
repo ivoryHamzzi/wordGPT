@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/word_gpt.dir/main.cc.o CMakeFiles/word_gpt.dir/dict.cc.o CMakeFiles/word_gpt.dir/lang.cc.o CMakeFiles/word_gpt.dir/quiz.cc.o CMakeFiles/word_gpt.dir/record.cc.o CMakeFiles/word_gpt.dir/user.cc.o  -o word_gpt  -lcurl 

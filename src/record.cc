@@ -13,7 +13,20 @@ Rec_probs::Rec_probs(const vector<Prob>&probs,Language lang):l(lang)
         score += p.if_right ? 1 : 0;
     sz = problems.size();
 }
+void QuizHistory::load_rec(const string& s){
+    ifstream ins;
+    ins.open(s);
+    if(ins.fail())
+        return;
+    Rec_probs k;
+    while(ins>>k){
+        records.push_back(k);
+        if(k.getScore()>highest_score)scores.insert(k.getScore());
+        score_sum+=k.getScore();
+        sz++;
+    }
 
+}
 Prob Rec_probs::operator[] (int n) const
 {
     if(n < 0 || n >= sz) 

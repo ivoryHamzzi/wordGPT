@@ -167,3 +167,68 @@ ostream& operator << (ostream& outs, const KorDef& l){
     outs<<l.word<<' '<<l.def<<' '<<l.pron<<' '<<l.hanja_rep<<'\n';
     return outs;
 }
+
+string& EngDef::get_rand_word_prompt(){
+    string s ="Give me an English word in TOEIC difficulty level.";
+    return s;
+}
+string& EngDef::get_foreign_def_prompt(){
+    string s =	R"(Give details of the word given by user in the following Json format:
+                { 
+                      "word": "word given by user", 
+                      "definition": "definition of the word", 
+                      "pronounciation": "pronounciation of word in english"
+                      
+                  })";
+    return s;
+}
+string& JpnDef::get_rand_word_prompt(){
+    string s ="Give me an Japanese word in JLPT difficulty level.";
+    return s;
+}
+string& JpnDef::get_foreign_def_prompt(){
+    string s =R"(Give details of the word given by user in the following Json format:
+                { 
+                        "word" : "word that will be provided by user",
+                        "definition":"definition of the word in Japanese",
+                        "pronounciation": "pronounciation of the word",
+                        "kanxi":"Kanxi represetation of the given Japanese word"
+                      
+                })";
+    return s;
+}
+string& ChnDef::get_rand_word_prompt(){
+    string s ="Give me an Chinese word in HSK difficulty level.";
+    return s;
+}
+string& ChnDef::get_foreign_def_prompt(){
+    string s =R"(Give details of the word given by user in the following Json format:
+                { 
+                        "word" : "word that will be provided by user",
+                        "definition" : "definition of the word in chinese",
+                        "pronounciation":"pronounciation of the word",
+                        "kanxi":"Kanxi represetation of the given Chinese word"
+                })";
+    return s;
+}
+
+void EngDef::set_details(openai::Json eng_detail){
+    word = eng_detail["word"].get<string>();
+    def = eng_detail["definition"].get<string>();
+    pron = eng_detail["pronounciation"].get<string>();
+}
+
+void JpnDef::set_details(openai::Json jpn_detail){
+    word = jpn_detail["word"].get<string>();
+    def = jpn_detail["definition"].get<string>();
+    pron = jpn_detail["pronounciation"].get<string>();
+    kanxi = jpn_detail["kanxi"].get<string>();
+        
+}
+
+void ChnDef::set_details(openai::Json chn_detail){
+    word = chn_detail["word"].get<string>();
+    def = chn_detail["definition"].get<string>();
+    eng_rep = chn_detail["pronounciation"].get<string>();
+    kanxi = chn_detail["kanxi"].get<string>();
+}
