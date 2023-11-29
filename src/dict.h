@@ -50,15 +50,15 @@ void Dict<T>::loadDict(){
     }
     int cnt = 0;
     int curId = -1;
-    while(ins>>curId){
-        if(curId != cnt){
-            for(int i = cnt; i<curId; i++)
-                unused_id.push(i);
-        }
+    string id_str;
+    while(getline(ins, id_str, '#') && (!ins.eof())){
+        curId = stoi(id_str);
+        for(int i = cnt; i<curId; i++)
+            unused_id.push(i);
         cnt = curId + 1;
         T f;
         KorDef k;
-        cin>>f>>k;
+        ins>>f>>k;
         wordMap.insert({curId, {f, k}});
     }
     for(int i = cnt; i < 10000; i++) 
@@ -72,7 +72,7 @@ void Dict<T>::storeDict(){
     out.open(dict_file_path);
     auto iter = wordMap.begin();
     while(iter != wordMap.end()){
-        out<<(*iter).first<<'\n'<<(*iter).second.first<<(*iter).second.second;
+        out<<(*iter).first<<'#'<<(*iter).second.first<<(*iter).second.second;
         iter++;
     }
 }

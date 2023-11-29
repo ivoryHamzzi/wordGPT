@@ -135,47 +135,47 @@ void KorDef::printWordDetail() const
 }
 
 istream& operator >> (istream& ins, EngDef& l){
-    getline(ins, l.word);
-    getline(ins, l.def);
-    getline(ins, l.pron);
+    getline(ins, l.word, '#');
+    getline(ins, l.def, '#');
+    getline(ins, l.pron, '#');
     return ins;
 }
 istream& operator >> (istream& ins, ChnDef& l){
-    getline(ins, l.word);
-    getline(ins, l.def);
-    getline(ins, l.eng_rep);
-    getline(ins, l.kanxi);
+    getline(ins, l.word, '#');
+    getline(ins, l.def, '#');
+    getline(ins, l.eng_rep, '#');
+    getline(ins, l.kanxi, '#');
     return ins;
 }
 istream& operator >> (istream& ins, JpnDef& l){
-    getline(ins, l.word);
-    getline(ins, l.def);
-    getline(ins, l.pron);
-    getline(ins, l.kanxi);
+    getline(ins, l.word, '#');
+    getline(ins, l.def, '#');
+    getline(ins, l.pron, '#');
+    getline(ins, l.kanxi, '#');
     return ins;
 }
 istream& operator >> (istream& ins, KorDef& l){
-    getline(ins, l.word);
-    getline(ins, l.def);
-    getline(ins, l.pron);
-    getline(ins, l.hanja_rep);
+    getline(ins, l.word, '#');
+    getline(ins, l.def, '#');
+    getline(ins, l.pron, '#');
+    getline(ins, l.hanja_rep, '#');
     return ins;
 }
 
 ostream& operator << (ostream& outs, const EngDef& l){
-    outs<<l.word<<'\n'<<l.def<<'\n'<<l.pron<<'\n';
+    outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#';
     return outs;
 }
 ostream& operator << (ostream& outs, const ChnDef& l){
-    outs<<l.word<<'\n'<<l.def<<'\n'<<l.eng_rep<<'\n'<<l.kanxi<<'\n';
+    outs<<l.word<<'#'<<l.def<<'#'<<l.eng_rep<<'#'<<l.kanxi<<'#';
     return outs;
 }
 ostream& operator << (ostream& outs, const JpnDef& l){
-    outs<<l.word<<'\n'<<l.def<<'\n'<<l.pron<<'\n'<<l.kanxi<<'\n';
+    outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#'<<l.kanxi<<'#';
     return outs;
 }
 ostream& operator << (ostream& outs, const KorDef& l){
-    outs<<l.word<<'\n'<<l.def<<'\n'<<l.pron<<'\n'<<l.hanja_rep<<'\n';
+    outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#'<<l.hanja_rep<<'#';
     return outs;
 }
 
