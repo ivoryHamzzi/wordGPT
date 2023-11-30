@@ -20,6 +20,7 @@ class Dict {
 public:
     Dict(string s):dict_file_path(s) {loadDict();}
     Dict():dict_file_path(""){}
+    ~Dict() {storeDict();}
 
     int retId(){return unused_id.front();}
     void loadDict();

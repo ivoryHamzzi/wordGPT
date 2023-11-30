@@ -23,11 +23,13 @@ void QuizHistory::load_rec(const string& s){
         return;
     Rec_probs k;
     while(ins>>k){
-        if(ins.eof())break;
+        //if(ins.eof())break;
         records.push_back(k);
         scores.insert(k.getScore());
         score_sum+=k.getScore();
         sz++;
+        if(ins.eof())
+            break;
     }
 
 }
@@ -49,18 +51,9 @@ Prob Rec_probs::operator[] (int n) const
 
     return problems[n];
 }
-/*
-int sz;
-struct {
-    int month;
-    int day;
-} date;
-int score;
-vector<Prob> problems;
-*/
+
 istream& operator >> (istream& ins, Rec_probs& rec)
 {
-
     string sz, dm, dd, sc, lg;
     if(ins.eof())return ins;
     getline(ins, sz, '#');
@@ -75,7 +68,7 @@ istream& operator >> (istream& ins, Rec_probs& rec)
     if(ins.eof())return ins;
     rec.sz = stoi(sz);
     rec.date.month = stoi(dm);
-    rec.date.day = stoi(dm);
+    rec.date.day = stoi(dd);
     rec.score = stoi(sc);
     rec.problems.reserve(rec.sz);
     int l_int = stoi(lg);
@@ -127,6 +120,7 @@ void QuizHistory::printRec(int n = 1)
     auto cur = records.begin();
     for(int i=0; i<n; i++){
         const Rec_probs& cur_rec = *cur;
+        cout << "Record#: " << i + 1 << '\n';
         cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
             cout << '\t' << i + 1 << ". " << endl;

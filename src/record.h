@@ -75,7 +75,12 @@ public:
     void store_rec(const string& s);
     long getScore() const {return score_sum;}
     int getSize() const {return sz;}
-    int getMaxScore() const {return *(scores.end()--);}
+    int getMaxScore() const
+    {
+        if(scores.empty())
+            return 0;
+        return *scores.rbegin();
+    }
 
 private:
     list<Rec_probs> records;
@@ -114,6 +119,7 @@ void Rec_probs::showDetail(Dict<T> &dict, int index){
 template<class T>
 void QuizHistory::delete_rec(int recN, Dict<T> &dict)
 {
+    recN--;
     auto cur = records.begin();
     for(int i=0; i<recN; i++)
         cur++;
