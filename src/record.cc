@@ -27,7 +27,7 @@ void QuizHistory::load_rec(const string& s){
         ins>>k;
         if(ins.eof())
             break;
-        cout<<k<<endl;
+        //cout<<k<<endl;
         records.push_back(k);
         scores.insert(k.getScore());
         score_sum+=k.getScore();
@@ -92,10 +92,7 @@ istream& operator >> (istream& ins, Rec_probs& rec)
         getline(ins, b, '#');
         if(b.compare("t")==0) tmp.if_right = true;
         else tmp.if_right = false;
-        string id_str;
-        getline(ins, id_str, '#');
-        tmp.word_id = stoi(id_str);
-        cout<<tmp.prob<<' '<<tmp.ans<<' '<<tmp.word_id<<' '<<tmp.if_right<<'\n';
+        //cout<<tmp.prob<<' '<<tmp.ans<<' '<<tmp.if_right<<'\n';
         rec.problems.push_back(tmp);
     }
     return ins;
@@ -112,7 +109,6 @@ ostream& operator << (ostream& outs, Rec_probs& rec)
         outs<<tmp.prob<<'#'<<tmp.ans<<'#';
         if(tmp.if_right)outs<<'t'<<'#';
         else outs<<'f'<<'#';
-        outs<<tmp.word_id<<'#';
     }
     outs<<"\n$";
     return outs;
@@ -131,23 +127,22 @@ void QuizHistory::printRec(int n = 1)
     auto cur = records.begin();
     for(int i=0; i<n; i++){
         const Rec_probs& cur_rec = *cur;
-        cout << "Record#: " << i + 1 << '\n';
+        cout << "Record#" << i + 1 << ': ' << endl;
         cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
             cout << '\t' << i + 1 << ". " << endl;
             cout << '\t' << "Prob: " << cur_rec[i].prob << endl;
             cout << '\t' << "Ans: " << cur_rec[i].ans << endl;
-            cout << '\t' << (cur_rec[i].if_right ? "Right!" : "Wrong...") << endl;
+            cout << '\t' << (cur_rec[i].if_right ? "Right!" : "Wrong...") << '\n' << endl;
         }
-        cout << cur_rec.getScore() << '\n';
-        cout << endl;
+        cout << "Score: " << cur_rec.getScore() << '\n' << endl;
         cur++;
     }
 }
 
 Language QuizHistory::getLanguage(int recN){
     auto cur = records.begin();
-    for(int i=0; i<recN; i++)
+    for(int i=1; i<recN; i++)
         cur++;
     Rec_probs curRec = *cur;
     Language l = curRec.l;

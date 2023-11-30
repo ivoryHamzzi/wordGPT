@@ -10,7 +10,8 @@ enum OperMode {
     QUIZ,
     HISTORY,
     SIGNOUT,
-    QUIT
+    DICT,
+    QUIT,
 };
 
 
@@ -22,8 +23,9 @@ pair<int, int> getOpCode(int user_id)
         cout << "1: For some quiz" << endl;
         cout << "2: For history serach" << endl;
         cout << "3: Sign out" << endl;
+        cout << "4: Dictionary" << endl;
         cout << "Else: quit the Program" << endl;
-        if(!(cin >> ret.first) || ret.first <= 0 || ret.first > 3) {
+        if(!(cin >> ret.first)) {
             ret.first = QUIT;
             return ret;
         }
@@ -39,7 +41,7 @@ pair<int, int> getOpCode(int user_id)
             break;
         case HISTORY:
             cout<< "Select Action..." << endl;
-            cout << "1: Show Quiz History\n" << endl;
+            cout << "1: Show Quiz History" << endl;
             cout << "2: Info of a single word of a history" << endl;
             cout << "3: Delete record" << endl;
             while(cin >> ret.second) {
@@ -50,13 +52,36 @@ pair<int, int> getOpCode(int user_id)
             break;
         case SIGNOUT:
             break;
+        case DICT:
+            cout << "1: English, 2: Japanese, 3: Chinese" << endl;
+            while(cin >> ret.second) {
+                if(ret.second >= 1 && ret.second <= 3)
+                    break;
+                cin.ignore();
+            }            
+            break;
+        default:
+            ret.first = QUIT;
+            return ret;
         }
     } else {
         ret.first = SIGNIN;
-        cout << "Sign in your ID(Integer), -1 for quit:" << endl;
-        cin >> ret.second;
+        cout << "Sign in your ID(Integer), type 0 for dictionary, or else for quit:" << endl;
+        if(!(cin >> ret.second)) {
+            ret.first = QUIT;
+            return ret;
+        }
         if(ret.second == -1)
             ret.first = QUIT;
+        else if(ret.second == 0) {
+            ret.first = DICT;
+            cout << "1: English, 2: Japanese, 3: Chinese" << endl;
+            while(cin >> ret.second) {
+                if(ret.second >= 1 && ret.second <= 3)
+                    break;
+                cin.ignore();
+            }            
+        }
     }
     return ret;
 }
@@ -128,12 +153,16 @@ int main(int argc, char* argv[])
                 user.rec.printRec(sz);
                 break;
             case 2:
-                cout<<"Select record number to show detail: ";
+                cout<<"Select record number to show detail(1 ~ " << user.rec.getSize() << "): ";
                 cin>>rec_num;
-                cout<<"Select question number to show detail: ";
-                cin>>prob_num;
-                if(rec_num >= user.rec.getSize()){
-                    cout<<"Bad input. Type record num 0 ~ "<<user.rec.getSize()<<'\n';
+                if(rec_num > user.rec.getSize() || rec_num <= 0){
+                    cout<<"Bad input. Type record num 1 ~ "<<user.rec.getSize()<<'\n';
+                    break;
+                }
+                cout<<"Select problem number to show detail(1 ~ " << PROB_NUM << "): ";
+                cin >> prob_num;
+                if(prob_num > PROB_NUM || prob_num <= 0){
+                    cout << "Bad input. Type record num 1 ~ " << PROB_NUM << '\n';
                     break;
                 }
                 switch(user.rec.getLanguage(rec_num)) {
@@ -183,6 +212,21 @@ int main(int argc, char* argv[])
             user_id = opcode.second;
             user_ptr = new User("./usr/user_" + to_string(user_id) + ".txt");
             break;
+        case DICT:
+            cout << "Type your word: ";
+            string word;
+            cin >> word;
+            switch(opcode.second) {
+            case ENGLISH:
+                dict_eng.printDict(word);
+                break;
+            case JAPANESE:
+                dict_jpn.printDict(word);
+                break;
+            case CHINESE:
+                dict_chn.printDict(word);
+                break;
+            }
         }
     }
     if(user_id != -1)

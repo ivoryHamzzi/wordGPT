@@ -13,7 +13,6 @@ struct Prob{
     string prob;
     string ans;
     bool if_right;
-    uint32_t word_id;
 
     template<class T>
     void showDetail(const Dict<T>& dict);
@@ -23,7 +22,7 @@ struct Prob{
 
 class Rec_probs{
 public:
-    Rec_probs():sz(0), score(0){}
+    Rec_probs():sz(0), date({0, 0}), score(0), problems(0) {}
     Rec_probs(const vector<Prob>& probs, Language lang);
     int getScore() const {return score;}
     int getSize() const {return sz;}
@@ -93,15 +92,13 @@ private:
 template <class T>
 void Prob::showDetail(const Dict<T>& dict)
 {
-    dict.printDict(word_id);
+    dict.printDict(prob);
 }
 
 template<class T>
 void Prob::deleteProb(Dict<T>& dict)
 {
-    //auto iter = dict.find(word_id);
-    dict.deleteDict(word_id);
-    dict.unused_id.push(word_id);
+    dict.deleteDict(prob);
 }
 
 template<class T>
@@ -111,10 +108,8 @@ void Rec_probs::deleteProbs(Dict<T> &dict){
 }
 template<class T>
 void Rec_probs::showDetail(Dict<T> &dict, int index){
-    problems[index].showDetail(dict);
+    problems[index - 1].showDetail(dict);
 }
-
-
 
 template<class T>
 void QuizHistory::delete_rec(int recN, Dict<T> &dict)
@@ -123,7 +118,7 @@ void QuizHistory::delete_rec(int recN, Dict<T> &dict)
     auto cur = records.begin();
     for(int i=0; i<recN; i++)
         cur++;
-    Rec_probs curRec = *cur;
+    Rec_probs& curRec = *cur;
     int score2 = curRec.getScore();
     scores.erase(score2);
     sz --;
@@ -135,12 +130,12 @@ void QuizHistory::delete_rec(int recN, Dict<T> &dict)
 }
 
 template<class T>
-void QuizHistory::show_detail(int recN, int index, Dict<T> &dict){
+void QuizHistory::show_detail(int rec_num, int index, Dict<T> &dict){
     auto cur = records.begin();
-    for(int i=0; i<recN; i++)
+    for(int i=1; i<rec_num; i++)
         cur++;
-    Rec_probs curRec = *cur;
-    curRec.showDetail(dict, index);
+    Rec_probs& cur_rec = *cur;
+    cur_rec.showDetail(dict, index);
 }
 
 #endif

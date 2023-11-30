@@ -22,19 +22,17 @@ public:
     Dict():dict_file_path(""){}
     ~Dict() {storeDict();}
 
-    int retId(){return unused_id.front();}
     void loadDict();
     void storeDict();
-    void printDict(int id) const;
-    void deleteDict(int id);
-    void addMap(const int id, const KorDef& kor, const T& lang);
+    void printDict(const string& word) const;
+    void deleteDict(const string& word);
+    void addMap(const string& word, const KorDef& kor, const T& lang);
     friend class Rec_probs;
     friend struct Prob;
-    auto find(int id) {return wordMap.find(id);}
+    auto find(const string& s) {return wordMap.find(s);}
+    auto exist(const string& s) {return find(s) != wordMap.end();};
 private:
-    map<int, pair<T, KorDef> > wordMap;
-    queue<int> unused_id;
-
+    map<string, pair<T, KorDef> > wordMap;
     string dict_file_path;
 };
 
@@ -42,33 +40,21 @@ private:
 template<class T>
 void Dict<T>::loadDict(){
     using namespace std;
-    cout<<'1'<<endl;
+    //cout<<'1'<<endl;
     ifstream ins;
     ins.open(dict_file_path);
-    if(ins.fail()){
-        for(int i = 0; i < 10000; i++) 
-            unused_id.push(i);
+    if(ins.fail())
         return;
-    }
-    int cnt = 0;
-    int curId = -1;
-    string id_str;
-    while(getline(ins, id_str, '#') && (!ins.eof())){
+    string word;
+    while(getline(ins, word, '#') && (!ins.eof())){
         //if(ins.eof())break;
-        cout<<id_str<<endl;
-        curId = stoi(id_str);
-        for(int i = cnt; i<curId; i++)
-            unused_id.push(i);
-        cnt = curId + 1;
-        cout<<curId<<endl;
+        //cout<<word<<endl;
         T f;
         KorDef k;
         ins>>f>>k;
-        cout<<f<<k<<endl;
-        wordMap.insert({curId, {f, k}});
+        //cout<<f<<k<<endl;
+        wordMap.insert({word, {f, k}});
     }
-    for(int i = cnt; i < 10000; i++) 
-        unused_id.push(i);
 }
 
 template<class T>
@@ -84,21 +70,27 @@ void Dict<T>::storeDict(){
 }
 
 template<class T>
-void Dict<T>::printDict(int id)const{
-    auto iter = wordMap.find(id);
+void Dict<T>::printDict(const string& word)const{
+    auto iter = wordMap.find(word);
+    if(iter == wordMap.end()) {
+        cout << "Definition Not found!" << endl;
+        return;
+    }
     (*iter).second.first.printWordDetail();
     (*iter).second.second.printWordDetail();
 }
 
 template<class T>
-void Dict<T>::deleteDict(int id){
-    auto iter = wordMap.find(id);
-    wordMap.erase(iter);
+void Dict<T>::deleteDict(const string& word){
+    auto iter = wordMap.find(word);
+    if(iter != wordMap.end())
+        wordMap.erase(iter);
 }
+
 template<class T>
-void Dict<T>::addMap(const int id, const KorDef& kor, const T& lang){
-    unused_id.pop();
-    wordMap[id] = make_pair(lang, kor);
+void Dict<T>::addMap(const string& word, const KorDef& kor, const T& lang){
+    if(wordMap.find(word) == wordMap.end())
+        wordMap[word] = make_pair(lang, kor);
 }
 
 #endif

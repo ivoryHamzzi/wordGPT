@@ -7,6 +7,8 @@
 
 using namespace std;
 
+const int PROB_NUM = 3;
+
 template<class T>
 class Quiz {
 public:
@@ -38,6 +40,7 @@ protected:
     openai::Json actual_translate_prompt;
     openai::Json foreign_def_prompt;
     openai::Json korean_def_prompt;
+
 };
 
 
@@ -54,8 +57,8 @@ string Quiz<T>::get_rand_word()
 template<class T>
 bool Quiz<T>::get_if_match(string q, string a)
 {
-        cout<< q + " / " + a<<'\n';
         string s = q + " / " + a;
+        cout << s << endl;
         if_match_prompt["messages"][1]["content"] = s;
         auto completion = openai::chat().create(if_match_prompt);
         
@@ -102,7 +105,7 @@ openai::Json Quiz<T>::get_Korean_def(string q)
 template<class T>
 Quiz<T>:: Quiz()
 {
-    cout<<"Quiz init\n";
+    //cout<<"Quiz init\n";
     rand_word_prompt["model"]="gpt-3.5-turbo";
     rand_word_prompt["messages"][0]["role"]="system";
     rand_word_prompt["messages"][0]["content"]="Answer only in a single word. Do not make the same response you made before.";
@@ -160,54 +163,61 @@ Quiz<T>:: Quiz()
 template <class T>
 void Quiz<T>::question(Dict<T>& dict)
 {
-        score = 0;
-        record.clear();
-        for(int i=0; i<3; i++){
-            cout<<"Question\n";
-            string q = get_rand_word();
-            cout << "Question: " << q << endl;
-            cout << "Type answer\n";
-            string ans;
-            if(i==0)cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            getline(cin, ans);
-            bool is_ans = get_if_match(q, ans);
-            if(!is_ans) {
-                    cout<<"Wrong answer... :(\n";
-                    ans = get_right_ans(q);
-                    cout<<"The answer is "<<ans<<endl;
-            }
-            else{
-                cout<<"Correct!\n";
-                score++;
-            } 
-            openai::Json eng_detail = get_foreign_def(q);
-            /*string word = eng_detail["word"].get<string>();
-            string def = eng_detail["definition"].get<string>();
-            string pro = eng_detail["pronounciation"].get<string>();*/
-            T e;
-            e.set_details(eng_detail);
-            openai::Json kor_detail = get_Korean_def(ans);
-            string kor_word = "null";
-            string kor_def= "null";
-            string kor_pro = "null";
-            string kor_h = "null";
-            if(kor_detail["word"].is_null() == false)
-                kor_word = kor_detail["word"].get<string>();
-            if(kor_detail["definition"].is_null() == false)
-                kor_def = kor_detail["definition"].get<string>();
-            if(kor_detail["pronounciation"].is_null() == false)
-                kor_pro = kor_detail["pronounciation"].get<string>();
-            if(kor_detail["hanja"].is_null() == false)
-                kor_h = kor_detail["hanja"].get<string>();
-            KorDef k(kor_word, kor_def, kor_pro, kor_h);
-
-            Prob problem;
-            problem.prob = q;
-            problem.ans = ans;
-            problem.if_right = is_ans;
-            problem.word_id = dict.retId();
-            record.push_back(problem);
-            dict.addMap(problem.word_id, k, e);
+    score = 0;
+    record.clear();
+    for(int i=0; i<PROB_NUM; i++){
+        cout<<"Question: ";
+        string q = get_rand_word();
+        cout << q << endl;
+        cout << "Type Koread word: \n";
+        string ans;
+        if(i==0)cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        getline(cin, ans);
+        bool is_ans = get_if_match(q, ans);
+        if(!is_ans) {
+                cout<<"Wrong answer... :(\n";
+                ans = get_right_ans(q);
+                cout<<"The answer is "<<ans<<endl;
         }
+        else{
+            cout<<"Correct!\n";
+            score++;
+        } 
+
+        if(dict.exist(q)) {
+            cout << "Definition Already Exists" << endl;
+            continue;
+        }
+
+        cout << "Finding definitions...\n";
+        openai::Json eng_detail = get_foreign_def(q);
+        /*string word = eng_detail["word"].get<string>();
+        string def = eng_detail["definition"].get<string>();
+        string pro = eng_detail["pronounciation"].get<string>();*/
+        T e;
+        e.set_details(eng_detail);
+        openai::Json kor_detail = get_Korean_def(ans);
+        string kor_word = "null";
+        string kor_def= "null";
+        string kor_pro = "null";
+        string kor_h = "null";
+        if(kor_detail["word"].is_null() == false)
+            kor_word = kor_detail["word"].get<string>();
+        if(kor_detail["definition"].is_null() == false)
+            kor_def = kor_detail["definition"].get<string>();
+        if(kor_detail["pronounciation"].is_null() == false)
+            kor_pro = kor_detail["pronounciation"].get<string>();
+        if(kor_detail["hanja"].is_null() == false)
+            kor_h = kor_detail["hanja"].get<string>();
+        KorDef k(kor_word, kor_def, kor_pro, kor_h);
+
+        Prob problem;
+        problem.prob = q;
+        problem.ans = ans;
+        problem.if_right = is_ans;
+        record.push_back(problem);
+
+        dict.addMap(problem.prob, k, e);
+    }
 }
 #endif
