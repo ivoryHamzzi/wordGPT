@@ -22,12 +22,19 @@ void QuizHistory::load_rec(const string& s){
     if(ins.fail())
         return;
     Rec_probs k;
-    while(ins>>k){
+    while(!ins.eof()){
         //if(ins.eof())break;
+        ins>>k;
+        if(ins.eof())
+            break;
+        cout<<k<<endl;
         records.push_back(k);
         scores.insert(k.getScore());
         score_sum+=k.getScore();
         sz++;
+        string s;
+        getline(ins, s, '\n');
+        getline(ins, s, '$');
         if(ins.eof())
             break;
     }
@@ -54,6 +61,7 @@ Prob Rec_probs::operator[] (int n) const
 
 istream& operator >> (istream& ins, Rec_probs& rec)
 {
+    rec = Rec_probs();
     string sz, dm, dd, sc, lg;
     if(ins.eof())return ins;
     getline(ins, sz, '#');
@@ -76,6 +84,7 @@ istream& operator >> (istream& ins, Rec_probs& rec)
     if(l_int == 1)rec.l=JAPANESE;
     if(l_int == 2)rec.l=CHINESE;
     Prob tmp;
+  //  rec.problems.clear();
     for(int i=0; i<rec.sz; i++){
         getline(ins, tmp.prob, '#');
         getline(ins, tmp.ans, '#');
@@ -86,12 +95,13 @@ istream& operator >> (istream& ins, Rec_probs& rec)
         string id_str;
         getline(ins, id_str, '#');
         tmp.word_id = stoi(id_str);
+        cout<<tmp.prob<<' '<<tmp.ans<<' '<<tmp.word_id<<' '<<tmp.if_right<<'\n';
         rec.problems.push_back(tmp);
     }
     return ins;
 }
 ostream& operator << (ostream& outs, Rec_probs& rec)
-{
+{ 
     outs<<rec.sz<<'#'<<rec.date.month<<'#'<<rec.date.day<<'#'<<rec.score<<'#';
     if(rec.l == ENGLISH)outs<<0<<'#';
     if(rec.l == JAPANESE)outs<<1<<'#';
@@ -104,6 +114,7 @@ ostream& operator << (ostream& outs, Rec_probs& rec)
         else outs<<'f'<<'#';
         outs<<tmp.word_id<<'#';
     }
+    outs<<"\n$";
     return outs;
 }
 
