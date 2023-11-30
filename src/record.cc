@@ -127,7 +127,7 @@ void QuizHistory::printRec(int n = 1)
     auto cur = records.begin();
     for(int i=0; i<n; i++){
         const Rec_probs& cur_rec = *cur;
-        cout << "Record#" << i + 1 << ': ' << endl;
+        cout << "Record#" << i + 1 << ": " << endl;
         cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
             cout << '\t' << i + 1 << ". " << endl;
