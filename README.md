@@ -4,10 +4,16 @@ Word training application using chatGPT
 Usage)
 In your wordGPT root directory,
 $ mkdir build
+
 $ cd build
+
 $ cmake ..
+
 $ make
+
 $ ./src/word_gpt
+
+
 
 Supports following main features:
 1) Consult a vocabulary quiz with GPT
