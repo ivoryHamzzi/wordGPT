@@ -40,7 +40,6 @@ protected:
     openai::Json actual_translate_prompt;
     openai::Json foreign_def_prompt;
     openai::Json korean_def_prompt;
-
 };
 
 
@@ -94,8 +93,8 @@ openai::Json Quiz<T>::get_Korean_def(string q)
                 { 
                       "word": "korean word given by user",
                       "definition":"definition of the given word in korean",
-                      "pronounciation": "pronounciation of the word in korean",
-                      "hanja" : "chinese character representation of the given korean word. if not exists, set it to null."
+                      "pronounciation": "pronounciation of the given word in korean",
+                      "hanja" : "chinese character representation of the given korean word. If not exists, set it to null."
                 })";
         korean_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(korean_def_prompt);
@@ -108,7 +107,7 @@ Quiz<T>:: Quiz()
     //cout<<"Quiz init\n";
     rand_word_prompt["model"]="gpt-3.5-turbo";
     rand_word_prompt["messages"][0]["role"]="system";
-    rand_word_prompt["messages"][0]["content"]="Answer only in a single word. Do not make the same response you made before.";
+    rand_word_prompt["messages"][0]["content"]="Answer only in a single word. Never make the same response as before.";
     rand_word_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     rand_word_prompt["temperature"] = 1.0;        
@@ -116,7 +115,7 @@ Quiz<T>:: Quiz()
     if_match_prompt["model"]="gpt-3.5-turbo";
     if_match_prompt["messages"][0]["role"]="system";
     if_match_prompt["messages"][0]["content"]=R"(You will get two words, divided by '/', by user. 
-                      Type 'Y' only if the first word can be translated into second word. 
+                      Type 'Y' only if the first word can be translated into second Korean word. 
                       Else, type 'N' only.)";
     if_match_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;

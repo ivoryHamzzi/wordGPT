@@ -216,7 +216,7 @@ string EngDef::get_foreign_def_prompt()
 
 string JpnDef::get_rand_word_prompt()
 {
-    string s ="Give me an Japanese word in JLPT difficulty level.";
+    string s ="Give me an Japanese word in JLPT difficulty level. Answer in a word represented only with Hiragana or Katakana";
     return s;
 }
 
@@ -234,7 +234,7 @@ string JpnDef::get_foreign_def_prompt()
 }
 string ChnDef::get_rand_word_prompt()
 {
-    string s ="Give me an Chinese word in HSK difficulty level.";
+    string s ="Give me an Chinese word in HSK difficulty level. Answer only with the chinese character.";
     return s;
 }
 string ChnDef::get_foreign_def_prompt()
