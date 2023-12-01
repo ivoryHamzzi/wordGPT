@@ -107,7 +107,7 @@ Quiz<T>:: Quiz()
     //cout<<"Quiz init\n";
     rand_word_prompt["model"]="gpt-3.5-turbo";
     rand_word_prompt["messages"][0]["role"]="system";
-    rand_word_prompt["messages"][0]["content"]="Answer only in a single word. Never make the same response as before.";
+    rand_word_prompt["messages"][0]["content"]="Answer only in a single word without any explanation. Never make the same response as before.";
     rand_word_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     rand_word_prompt["temperature"] = 1.0;        

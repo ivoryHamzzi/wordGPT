@@ -1,5 +1,0 @@
-/mnt/c/Users/samsung/cppLab/proj/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/samsung/cppLab/proj/CMakeFiles/edit_cache.dir
-/mnt/c/Users/samsung/cppLab/proj/src/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/samsung/cppLab/proj/src/CMakeFiles/edit_cache.dir
-/mnt/c/Users/samsung/cppLab/proj/src/CMakeFiles/word_gpt.dir
