@@ -16,10 +16,10 @@ public:
     void setWord(const string& w);
 
     const string& get_def();
-    
     void set_def(const string& d);
-    
    
+    virtual string get_rand_word_prompt();
+    virtual string get_foreign_def_prompt(); 
     virtual void printWordDetail() const;
     
 protected:
@@ -32,12 +32,12 @@ public:
     EngDef(const string& w, const string& d, const string& p) : LangDef(w, d), pron(p) {}
     EngDef() : LangDef(), pron() {}
 
+    string get_rand_word_prompt();
+    string get_foreign_def_prompt();
     void set_details(openai::Json eng_detail);
     const string& getPronunc();
     void setPronunc(const string& p);
 
-    static string get_rand_word_prompt();
-    static string get_foreign_def_prompt();
     
     friend ostream& operator << (ostream& outs, const EngDef& l);
     friend istream& operator >> (istream& ins, EngDef& l);
@@ -58,8 +58,8 @@ public:
     void setKanxi(string k);
     const string& getKanxi();
 
-    static string get_rand_word_prompt();
-    static string get_foreign_def_prompt();
+    string get_rand_word_prompt();
+    string get_foreign_def_prompt();
     void set_details(openai::Json eng_detail);
 
     friend ostream& operator << (ostream& outs, const JpnDef& l);
@@ -82,8 +82,8 @@ public:
     void setEngRep(string e);
     const string& getEngRep();
 
-    static string get_rand_word_prompt();
-    static string get_foreign_def_prompt();
+    string get_rand_word_prompt();
+    string get_foreign_def_prompt();
     void set_details(openai::Json eng_detail);
     
     void printWordDetail() const;
