@@ -134,27 +134,31 @@ void KorDef::printWordDetail() const
     cout << "Definition: " << def << endl;
 }
 
-istream& operator >> (istream& ins, EngDef& l){
+istream& operator >> (istream& ins, EngDef& l)
+{
     getline(ins, l.word, '#');
     getline(ins, l.def, '#');
     getline(ins, l.pron, '#');
     return ins;
 }
-istream& operator >> (istream& ins, ChnDef& l){
+istream& operator >> (istream& ins, ChnDef& l)
+{
     getline(ins, l.word, '#');
     getline(ins, l.def, '#');
     getline(ins, l.eng_rep, '#');
     getline(ins, l.kanxi, '#');
     return ins;
 }
-istream& operator >> (istream& ins, JpnDef& l){
+istream& operator >> (istream& ins, JpnDef& l)
+{
     getline(ins, l.word, '#');
     getline(ins, l.def, '#');
     getline(ins, l.pron, '#');
     getline(ins, l.kanxi, '#');
     return ins;
 }
-istream& operator >> (istream& ins, KorDef& l){
+istream& operator >> (istream& ins, KorDef& l)
+{
     getline(ins, l.word, '#');
     getline(ins, l.def, '#');
     getline(ins, l.pron, '#');
@@ -162,28 +166,44 @@ istream& operator >> (istream& ins, KorDef& l){
     return ins;
 }
 
-ostream& operator << (ostream& outs, const EngDef& l){
+ostream& operator << (ostream& outs, const EngDef& l)
+{
     outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#';
     return outs;
 }
-ostream& operator << (ostream& outs, const ChnDef& l){
+ostream& operator << (ostream& outs, const ChnDef& l)
+{
     outs<<l.word<<'#'<<l.def<<'#'<<l.eng_rep<<'#'<<l.kanxi<<'#';
     return outs;
 }
-ostream& operator << (ostream& outs, const JpnDef& l){
+ostream& operator << (ostream& outs, const JpnDef& l)
+{
     outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#'<<l.kanxi<<'#';
     return outs;
 }
-ostream& operator << (ostream& outs, const KorDef& l){
+ostream& operator << (ostream& outs, const KorDef& l)
+{
     outs<<l.word<<'#'<<l.def<<'#'<<l.pron<<'#'<<l.hanja_rep<<'#';
     return outs;
 }
 
-string EngDef::get_rand_word_prompt(){
+string LangDef::get_rand_word_prompt()
+{
+    return string();
+}
+string LangDef::get_foreign_def_prompt()
+{
+    return string();
+}
+
+string EngDef::get_rand_word_prompt()
+{
     string s ="Give me an English word in TOEIC difficulty level.";
     return s;
 }
-string EngDef::get_foreign_def_prompt(){
+
+string EngDef::get_foreign_def_prompt()
+{
     string s =	R"(Give details of the word given by user in the following Json format:
                 { 
                       "word": "word given by user", 
@@ -193,11 +213,15 @@ string EngDef::get_foreign_def_prompt(){
                   })";
     return s;
 }
-string JpnDef::get_rand_word_prompt(){
+
+string JpnDef::get_rand_word_prompt()
+{
     string s ="Give me an Japanese word in JLPT difficulty level.";
     return s;
 }
-string JpnDef::get_foreign_def_prompt(){
+
+string JpnDef::get_foreign_def_prompt()
+{
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
                         "word" : "word that will be provided by user",
@@ -208,11 +232,13 @@ string JpnDef::get_foreign_def_prompt(){
                 })";
     return s;
 }
-string ChnDef::get_rand_word_prompt(){
+string ChnDef::get_rand_word_prompt()
+{
     string s ="Give me an Chinese word in HSK difficulty level.";
     return s;
 }
-string ChnDef::get_foreign_def_prompt(){
+string ChnDef::get_foreign_def_prompt()
+{
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
                         "word" : "word that will be provided by user",
@@ -223,7 +249,8 @@ string ChnDef::get_foreign_def_prompt(){
     return s;
 }
 
-void EngDef::set_details(openai::Json eng_detail){
+void EngDef::set_details(openai::Json eng_detail)
+{
     word = "null";
     def = "null";
     pron = "null";
@@ -235,7 +262,8 @@ void EngDef::set_details(openai::Json eng_detail){
         pron = eng_detail["pronounciation"].get<string>();
 }
 
-void JpnDef::set_details(openai::Json jpn_detail){
+void JpnDef::set_details(openai::Json jpn_detail)
+{
     word = "null";
     def = "null";
     pron = "null";
@@ -250,7 +278,8 @@ void JpnDef::set_details(openai::Json jpn_detail){
         kanxi = jpn_detail["kanxi"].get<string>();      
 }
 
-void ChnDef::set_details(openai::Json chn_detail){
+void ChnDef::set_details(openai::Json chn_detail)
+{
     word = "null";
     def = "null";
     eng_rep = "null";
