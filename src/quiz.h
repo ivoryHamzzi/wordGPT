@@ -57,7 +57,6 @@ template<class T>
 bool Quiz<T>::get_if_match(string q, string a)
 {
         string s = q + " / " + a;
-        cout << s << endl;
         if_match_prompt["messages"][1]["content"] = s;
         auto completion = openai::chat().create(if_match_prompt);
         
@@ -107,7 +106,7 @@ Quiz<T>:: Quiz()
     //cout<<"Quiz init\n";
     rand_word_prompt["model"]="gpt-3.5-turbo";
     rand_word_prompt["messages"][0]["role"]="system";
-    rand_word_prompt["messages"][0]["content"]="Answer only in a single word without any explanation. Never make the same response as before.";
+    rand_word_prompt["messages"][0]["content"]="Answer ONLY in a single word without any explanation or period. Never make the same response as before.";
     rand_word_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     rand_word_prompt["temperature"] = 1.0;        
@@ -184,11 +183,11 @@ void Quiz<T>::question(Dict<T>& dict)
         } 
 
         if(dict.exist(q)) {
-            cout << "Definition Already Exists" << endl;
+            cout << "Word Definition Already Exists in the local dict." << endl;
             continue;
         }
 
-        cout << "Finding definitions...\n";
+        cout << "Finding and saving definitions...\n";
         openai::Json eng_detail = get_foreign_def(q);
         /*string word = eng_detail["word"].get<string>();
         string def = eng_detail["definition"].get<string>();

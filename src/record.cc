@@ -128,14 +128,14 @@ void QuizHistory::printRec(int n = 1)
     for(int i=0; i<n; i++){
         const Rec_probs& cur_rec = *cur;
         cout << "Record#" << i + 1 << ": " << endl;
-        cout << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
+        cout << "Date: " << cur_rec.getMonth() << '/' << cur_rec.getDay() << ":\n";
         for(int i = 0; i < cur_rec.getSize(); i++) {
-            cout << '\t' << i + 1 << ". " << endl;
-            cout << '\t' << "Prob: " << cur_rec[i].prob << endl;
-            cout << '\t' << "Ans: " << cur_rec[i].ans << endl;
-            cout << '\t' << (cur_rec[i].if_right ? "Right!" : "Wrong...") << '\n' << endl;
+            cout << "  " << i + 1 << ". " << endl;
+            cout << "  " << "Prob: " << cur_rec[i].prob << endl;
+            cout << "  " << "Ans: " << cur_rec[i].ans << endl;
+            cout << "  You were " << (cur_rec[i].if_right ? "Right!" : "Wrong...") << '\n' << endl;
         }
-        cout << "Score: " << cur_rec.getScore() << '\n' << endl;
+        cout << "Total Score: " << cur_rec.getScore() << '\n' << endl;
         cur++;
     }
 }

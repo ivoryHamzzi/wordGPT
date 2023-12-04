@@ -1,5 +1,5 @@
 #include "lang.h"
-#include "../include/openai/openai.hpp"
+#include "openai.hpp"
 #include <iostream>
 
 const string& LangDef::getWord()
@@ -27,8 +27,8 @@ void LangDef::printWordDetail() const
     using std::cout;
     using std::endl;
 
-    cout << "Word: " << word << '\n';
-    cout << "Definition: " << def << endl;
+    cout << "  Word: " << word << '\n';
+    cout << "  Definition: " << def << endl;
 }
 
 const string& EngDef::getPronunc()
@@ -46,8 +46,8 @@ void EngDef::printWordDetail() const
     using std::cout;
     using std::endl;
 
-    cout << "Word: " << word << '[' << pron << ']' << '\n';
-    cout << "Definition: " << def << endl;
+    cout << "  Word: " << word << '[' << pron << ']' << '\n';
+    cout << "  Definition: " << def << endl;
 }
 
 const string& JpnDef::getPronunc()
@@ -75,9 +75,9 @@ void JpnDef::printWordDetail() const
     using std::cout;
     using std::endl;
 
-    cout << "Word: " << word << '[' << pron << ']' << '\n';
-    cout << "Kanxi: " << kanxi << '\n';
-    cout << "Definition: " << def << endl;
+    cout << "  Word: " << word << '[' << pron << ']' << '\n';
+    cout << "  Kanxi: " << kanxi << '\n';
+    cout << "  Definition: " << def << endl;
 }
 
 void ChnDef::setKanxi(string k)
@@ -102,9 +102,9 @@ const string& ChnDef::getEngRep()
 
 void ChnDef::printWordDetail() const
 {
-    cout << "Word: " << word << '[' << eng_rep << ']' << '\n';
-    cout << "Kanxi: " << kanxi << '\n';
-    cout << "Definition: " << def << endl;
+    cout << "  Word: " << word << '[' << eng_rep << ']' << '\n';
+    cout << "  Kanxi: " << kanxi << '\n';
+    cout << "  Definition: " << def << endl;
 }
 
 const string& KorDef::getPronunc()
@@ -129,9 +129,9 @@ void KorDef::setHanja(const string& h)
 
 void KorDef::printWordDetail() const
 {
-    cout << "Word: " << word << '[' << pron << ']' << '\n';
-    cout << "Hanja: " << hanja_rep << '\n';
-    cout << "Definition: " << def << endl;
+    cout << "  Word: " << word << '[' << pron << ']' << '\n';
+    cout << "  Hanja: " << hanja_rep << '\n';
+    cout << "  Definition: " << def << endl;
 }
 
 istream& operator >> (istream& ins, EngDef& l)
@@ -208,7 +208,7 @@ string EngDef::get_foreign_def_prompt()
                 { 
                       "word": "word given by user", 
                       "definition": "definition of the word", 
-                      "pronounciation": "pronounciation of word in english"
+                      "pronounciation": "pronounciation of the word in english"
                       
                   })";
     return s;

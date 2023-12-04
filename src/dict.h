@@ -40,19 +40,15 @@ private:
 template<class T>
 void Dict<T>::loadDict(){
     using namespace std;
-    //cout<<'1'<<endl;
     ifstream ins;
     ins.open(dict_file_path);
     if(ins.fail())
         return;
     string word;
     while(getline(ins, word, '#') && (!ins.eof())){
-        //if(ins.eof())break;
-        //cout<<word<<endl;
         T f;
         KorDef k;
         ins>>f>>k;
-        //cout<<f<<k<<endl;
         wordMap.insert({word, {f, k}});
     }
 }
@@ -73,11 +69,14 @@ template<class T>
 void Dict<T>::printDict(const string& word)const{
     auto iter = wordMap.find(word);
     if(iter == wordMap.end()) {
-        cout << "Definition Not found!" << endl;
+        cout << word << ": Definition Not found!" << endl;
         return;
     }
+    cout << "##### Foreign Definition #####" << endl;
     (*iter).second.first.printWordDetail();
+    cout << "##### Korean Definition #####" << endl;
     (*iter).second.second.printWordDetail();
+    cout << endl;
 }
 
 template<class T>
