@@ -1,12 +1,12 @@
 # wordGPT
 Word training application using chatGPT
 
-Usage)
+Usage
 
 1. Add to ~/.bashrc (Depends on your environment):  
    export OPENAI_API_KEY=[OPENAI_KEY]
 
-3. In your wordGPT root directory,  
+2. In your wordGPT root directory,  
    $ mkdir build  
    $ cd build  
    $ cmake ..  

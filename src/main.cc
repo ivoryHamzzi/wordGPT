@@ -1,4 +1,5 @@
 #include "quiz.h"
+#include "openai.hpp"
 
 #include <iostream>
 #include <filesystem>
@@ -36,6 +37,7 @@ pair<int, int> getOpCode(int user_id)
             while(cin >> ret.second) {
                 if(ret.second >= 1 && ret.second <= 3)
                     break;
+                cout << "Please input the valid number(1 ~ 3): " << endl;
                 cin.ignore();
             }
             break;
@@ -47,6 +49,7 @@ pair<int, int> getOpCode(int user_id)
             while(cin >> ret.second) {
                 if(ret.second >= 1 && ret.second <= 3)
                     break;
+                cout << "Please input the valid number(1 ~ 3): " << endl;
                 cin.ignore();
             }
             break;
@@ -57,6 +60,7 @@ pair<int, int> getOpCode(int user_id)
             while(cin >> ret.second) {
                 if(ret.second >= 1 && ret.second <= 3)
                     break;
+                cout << "Please input the valid number(1 ~ 3): " << endl;
                 cin.ignore();
             }            
             break;
