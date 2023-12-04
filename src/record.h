@@ -64,8 +64,7 @@ public:
     void printRec(int n);
 
     Language getLanguage(int recN);
-    template <class T>
-    void delete_rec(int recN, Dict<T> &dict);
+    void delete_rec(int recN);
     template <class T>
     void show_detail(int recN, int index, Dict<T> &dict);
 
@@ -109,24 +108,6 @@ void Rec_probs::deleteProbs(Dict<T> &dict){
 template<class T>
 void Rec_probs::showDetail(Dict<T> &dict, int index){
     problems[index - 1].showDetail(dict);
-}
-
-template<class T>
-void QuizHistory::delete_rec(int recN, Dict<T> &dict)
-{
-    recN--;
-    auto cur = records.begin();
-    for(int i=0; i<recN; i++)
-        cur++;
-    Rec_probs& curRec = *cur;
-    int score2 = curRec.getScore();
-    scores.erase(score2);
-    sz --;
-    score_sum -= score2;
-
-    curRec.deleteProbs(dict);
-    records.erase(cur);
-
 }
 
 template<class T>

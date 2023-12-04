@@ -148,3 +148,20 @@ Language QuizHistory::getLanguage(int recN){
     Language l = curRec.l;
     return l;
 }
+
+void QuizHistory::delete_rec(int recN)
+{
+    recN--;
+    auto cur = records.begin();
+    for(int i=0; i<recN; i++)
+        cur++;
+    Rec_probs& curRec = *cur;
+    int score2 = curRec.getScore();
+    scores.erase(score2);
+    sz --;
+    score_sum -= score2;
+
+    //curRec.deleteProbs(dict);
+    records.erase(cur);
+
+}

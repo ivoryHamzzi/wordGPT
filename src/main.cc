@@ -190,19 +190,7 @@ int main(int argc, char* argv[])
                     cout<<"Bad input. Type record num 0 ~ "<<user.rec.getSize()<<'\n';
                     break;
                 }
-                switch(user.rec.getLanguage(rec_num)) {
-                case ENGLISH:
-                    user.rec.delete_rec(rec_num, dict_eng);
-                    break;
-                case JAPANESE:
-                    user.rec.delete_rec(rec_num, dict_jpn);
-                    break;
-                case CHINESE:
-                    user.rec.delete_rec(rec_num, dict_chn);
-                    break;
-                default:
-                    break;
-                }
+                user.rec.delete_rec(rec_num);
                 break;  
             }
             }

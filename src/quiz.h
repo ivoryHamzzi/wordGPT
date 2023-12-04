@@ -47,7 +47,7 @@ template <class T>
 string Quiz<T>::get_rand_word()
 {
     T a;
-    rand_word_prompt["messages"][0]["content"]=a.get_rand_word_prompt();
+    rand_word_prompt["messages"][1]["content"]=a.get_rand_word_prompt();
     
     auto completion = openai::chat().create(rand_word_prompt);
     return completion["choices"][0]["message"]["content"].template get<string>();
@@ -57,7 +57,7 @@ template<class T>
 bool Quiz<T>::get_if_match(string q, string a)
 {
         string s = q + " / " + a;
-        if_match_prompt["messages"][0]["content"] = s;
+        if_match_prompt["messages"][1]["content"] = s;
         auto completion = openai::chat().create(if_match_prompt);
         
         return (completion["choices"][0]["message"]["content"].template get<string>()) == "Y";
@@ -69,7 +69,7 @@ string Quiz<T>::get_right_ans(string q)
     string s = "What is ";
     s += q;
     s += " in Korean?";
-        actual_translate_prompt["messages"][0]["content"] = s;
+        actual_translate_prompt["messages"][1]["content"] = s;
 
         auto completion = openai::chat().create(actual_translate_prompt);
         return completion["choices"][0]["message"]["content"].template get<string>();
@@ -79,8 +79,8 @@ template <class T>
 openai::Json Quiz<T>::get_foreign_def(string q)
 {
         T a;
-        foreign_def_prompt["messages"][1]["content"] = a.get_foreign_def_prompt();
-        foreign_def_prompt["messages"][0]["content"] = q;
+        foreign_def_prompt["messages"][0]["content"] = a.get_foreign_def_prompt();
+        foreign_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(foreign_def_prompt);
         return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
@@ -88,14 +88,14 @@ openai::Json Quiz<T>::get_foreign_def(string q)
 template<class T>
 openai::Json Quiz<T>::get_Korean_def(string q)
 {
-        korean_def_prompt["messages"][1]["content"] = 	R"(Give details of the word given by user in the following Json format:
+        korean_def_prompt["messages"][0]["content"] = 	R"(Give details of the word given by user in the following Json format:
                 { 
                       "word": "korean word given by user",
                       "definition":"definition of the given word in korean",
-                      "pronounciation": "pronounciation of the given word in korean",
+                      "IPA": " IPA representation of the given word in korean",
                       "hanja" : "chinese character representation of the given korean word. If not exists, set it to null."
                 })";
-        korean_def_prompt["messages"][0]["content"] = q;
+        korean_def_prompt["messages"][1]["content"] = q;
         auto completion = openai::chat().create(korean_def_prompt);
         return openai::Json::parse(completion["choices"][0]["message"]["content"].template get<string>());
 }
@@ -104,31 +104,31 @@ template<class T>
 Quiz<T>:: Quiz()
 {
     //cout<<"Quiz init\n";
-    rand_word_prompt["model"]="gpt-3.5-turbo";
-    rand_word_prompt["messages"][1]["role"]="system";
-    rand_word_prompt["messages"][1]["content"]="Answer ONLY in a single word without any explanation or period. Never make the same response as before.";
-    rand_word_prompt["messages"][0]["role"]="user";
+    rand_word_prompt["model"]="gpt-4";
+    rand_word_prompt["messages"][0]["role"]="system";
+    rand_word_prompt["messages"][0]["content"]="Answer ONLY in a single word without any explanation or period. Never make the same response as before.";
+    rand_word_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     rand_word_prompt["temperature"] = 1.0;        
 
     if_match_prompt["model"]="gpt-3.5-turbo";
-    if_match_prompt["messages"][1]["role"]="system";
-    if_match_prompt["messages"][1]["content"]=R"(You got two words, divided by '/', by user. 
+    if_match_prompt["messages"][0]["role"]="system";
+    if_match_prompt["messages"][0]["content"]=R"(You will get two words, divided by '/', by user. 
                       Type 'Y' only if the first word can be translated into second Korean word. 
                       Else, type 'N' only.)";
-    if_match_prompt["messages"][0]["role"]="user";
+    if_match_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
-    if_match_prompt["temperature"] = 0.0; 
+    if_match_prompt["temperature"] = 0.0;       
 
     actual_translate_prompt["model"]="gpt-3.5-turbo";
-    actual_translate_prompt["messages"][1]["role"]="system";
-    actual_translate_prompt["messages"][1]["content"]="Response only with the korean word.";
-    actual_translate_prompt["messages"][0]["role"]="user";
+    actual_translate_prompt["messages"][0]["role"]="system";
+    actual_translate_prompt["messages"][0]["content"]="Response only with the korean word.";
+    actual_translate_prompt["messages"][1]["role"]="user";
     //actual_translate_prompt["messages"][1]["content"] =
     actual_translate_prompt["temperature"] = 0.0;       
  
     foreign_def_prompt["model"]="gpt-3.5-turbo";
-    foreign_def_prompt["messages"][1]["role"]="system";
+    foreign_def_prompt["messages"][0]["role"]="system";
     /*
     foreign_def_prompt["messages"][0]["content"]= R"(Give details of the word given by user in the following Json format:
                 { 
@@ -138,22 +138,22 @@ Quiz<T>:: Quiz()
                       
                   })";
                   */
-    foreign_def_prompt["messages"][0]["role"]="user";
+    foreign_def_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     foreign_def_prompt["temperature"] = 0.0;       
 
-    korean_def_prompt["model"]="gpt-3.5-turbo";
-    korean_def_prompt["messages"][1]["role"]="system";
-    korean_def_prompt["messages"][1]["content"]=R"(Give details of the word given by user in the following Json format:
+    korean_def_prompt["model"]="gpt-4";
+    korean_def_prompt["messages"][0]["role"]="system";
+    korean_def_prompt["messages"][0]["content"]=R"(Give details of the word given by user in the following Json format:
                 { 
                     
                       "word": "Korean word given by user",
                       "definition":"definition of the word in korean",
-                      "pronounciation": "pronounciation of the word in korean",
-                      "hanja" : "chinese character representation of the given korean word. if not exists, set it to null."
+                      "IPA": "IPA representation of the given word",
+                      "hanja" : "Chinese character representation of the given korean word. if not exists, set it to null."
                     
                   })";
-    korean_def_prompt["messages"][0]["role"]="user";
+    korean_def_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
     korean_def_prompt["temperature"] = 0.0;
 }
@@ -203,8 +203,8 @@ void Quiz<T>::question(Dict<T>& dict)
             kor_word = kor_detail["word"].get<string>();
         if(kor_detail["definition"].is_null() == false)
             kor_def = kor_detail["definition"].get<string>();
-        if(kor_detail["pronounciation"].is_null() == false)
-            kor_pro = kor_detail["pronounciation"].get<string>();
+        if(kor_detail["IPA"].is_null() == false)
+            kor_pro = kor_detail["IPA"].get<string>();
         if(kor_detail["hanja"].is_null() == false)
             kor_h = kor_detail["hanja"].get<string>();
         KorDef k(kor_word, kor_def, kor_pro, kor_h);

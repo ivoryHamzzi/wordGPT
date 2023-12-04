@@ -208,10 +208,8 @@ string EngDef::get_foreign_def_prompt()
                 { 
                       "word": "word given by user", 
                       "definition": "definition of the given word", 
-                      "pronounciation": "pronounciation of the given word"
-                      
-
-                  })";
+                      "IPA": " IPA representation of the given word"
+                })";
     return s;
 }
 
@@ -225,10 +223,10 @@ string JpnDef::get_foreign_def_prompt()
 {
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
-                        "word" : "word that will be provided by user",
-                        "definition":"definition of the word in Japanese",
-                        "pronounciation": "pronounciation of the word",
-                        "kanxi":"Kanxi represetation of the given Japanese word"
+                        "word": "word that will be provided by user",
+                        "definition": "definition of the word in Japanese",
+                        "IPA": "IPA representation of the given word",
+                        "kanxi": "Kanxi represetation of the given Japanese word"
                       
                 })";
     return s;
@@ -242,10 +240,10 @@ string ChnDef::get_foreign_def_prompt()
 {
     string s =R"(Give details of the word given by user in the following Json format:
                 { 
-                        "word" : "word that will be provided by user",
-                        "definition" : "definition of the word in chinese",
-                        "pronounciation":"pronounciation of the word",
-                        "kanxi":"Kanxi represetation of the given Chinese word"
+                        "word": "word that will be provided by user",
+                        "definition": "definition of the word in chinese",
+                        "IPA": "IPA representation of the word",
+                        "kanxi": "Kanxi represetation of the given Chinese word"
                 })";
     return s;
 }
@@ -259,8 +257,8 @@ void EngDef::set_details(openai::Json eng_detail)
         word = eng_detail["word"].get<string>();
     if(eng_detail["definition"].is_null() == false)
         def = eng_detail["definition"].get<string>();
-    if(eng_detail["pronounciation"].is_null() == false)
-        pron = eng_detail["pronounciation"].get<string>();
+    if(eng_detail["IPA"].is_null() == false)
+        pron = eng_detail["IPA"].get<string>();
 }
 
 void JpnDef::set_details(openai::Json jpn_detail)
@@ -273,8 +271,8 @@ void JpnDef::set_details(openai::Json jpn_detail)
         word = jpn_detail["word"].get<string>();
     if(jpn_detail["definition"].is_null() == false)
         def = jpn_detail["definition"].get<string>();
-    if(jpn_detail["pronounciation"].is_null() == false)
-        pron = jpn_detail["pronounciation"].get<string>();
+    if(jpn_detail["IPA"].is_null() == false)
+        pron = jpn_detail["IPA"].get<string>();
     if(jpn_detail["kanxi"].is_null() == false)
         kanxi = jpn_detail["kanxi"].get<string>();      
 }
@@ -289,8 +287,8 @@ void ChnDef::set_details(openai::Json chn_detail)
         word = chn_detail["word"].get<string>();
     if(chn_detail["definition"].is_null() == false)
         def = chn_detail["definition"].get<string>();
-    if(chn_detail["pronounciation"].is_null() == false)
-        eng_rep = chn_detail["pronounciation"].get<string>();
+    if(chn_detail["IPA"].is_null() == false)
+        eng_rep = chn_detail["IPA"].get<string>();
     if(chn_detail["kanxi"].is_null() == false)
         kanxi = chn_detail["kanxi"].get<string>();      
 }
