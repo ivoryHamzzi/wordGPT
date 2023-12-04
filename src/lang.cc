@@ -207,8 +207,8 @@ string EngDef::get_foreign_def_prompt()
     string s =	R"(Give details of the word given by user in the following Json format:
                 { 
                       "word": "word given by user", 
-                      "definition": "definition of the word", 
-                      "pronounciation": "pronounciation of the word in english"
+                      "definition": "definition of the given word", 
+                      "pronounciation": "pronounciation of the given word"
                       
 
                   })";
