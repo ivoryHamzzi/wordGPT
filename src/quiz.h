@@ -119,7 +119,7 @@ Quiz<T>:: Quiz()
                       Else, type 'N' only.)";
     if_match_prompt["messages"][1]["role"]="user";
     //openai_json["messages"][1]["content"] = ans;
-    if_match_prompt["temperature"] = 0.0;       
+    if_match_prompt["temperature"] = 0.0; 
 
     actual_translate_prompt["model"]="gpt-3.5-turbo";
     actual_translate_prompt["messages"][0]["role"]="system";

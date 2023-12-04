@@ -209,7 +209,7 @@ string EngDef::get_foreign_def_prompt()
                       "word": "word given by user", 
                       "definition": "definition of the word", 
                       "pronounciation": "pronounciation of word in english"
-                      
+
                   })";
     return s;
 }
